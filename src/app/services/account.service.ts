@@ -11,7 +11,7 @@ export class AccountService {
 
   private apiUrl = 'http://localhost:8080/api/v1';  // Reemplaza con tu URL de backend
 
-  private accountUpdatedSource = new Subject<void>();
+  private accountUpdatedSource = new Subject<AccountResponse[]>();
 
   accountUpdated$ = this.accountUpdatedSource.asObservable();
 
@@ -31,7 +31,7 @@ export class AccountService {
   }
 
   getAccount(accountNumber: string): Observable<AccountResponse> {
-    return this.http.post<AccountResponse>(`${this.apiUrl}/accounts/accountNumber`, {accountNumber}, { headers: this.getHeaders() });
+    return this.http.post<AccountResponse>(`${this.apiUrl}/accounts/accountNumber`, { accountNumber }, { headers: this.getHeaders() });
   }
 
   getAllAccounts(): Observable<AccountResponse[]> {
@@ -43,6 +43,8 @@ export class AccountService {
   }
 
   notifyAccountUpdated(): void {
-    this.accountUpdatedSource.next();
-}
+    this.getAllAccounts().subscribe(accounts => {
+      this.accountUpdatedSource.next(accounts);
+    });
+  }
 }
