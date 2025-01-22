@@ -1,0 +1,27 @@
+<nav class="navbar">
+    <h1 class="navbar__title">Bank Account</h1>
+    <div class="navbar__actions">
+        <div class="navbar__user-menu">
+            <img src="assets/images/user-1.jpg" alt="User" class="navbar__avatar" (click)="toggleMenu($event)">
+            @if (showMenu) {
+            <div class="navbar__dropdown">
+                <a class="navbar__dropdown-item">
+                    <i class="navbar__icon">👤</i>
+                    My Profile
+                </a>
+                <a class="navbar__dropdown-item">
+                    <i class="navbar__icon">📧</i>
+                    My Account
+                </a>
+                <a class="navbar__dropdown-item">
+                    <i class="navbar__icon">📋</i>
+                    My Task
+                </a>
+                <button class="navbar__logout-btn" (click)="logout()">
+                    Logout
+                </button>
+            </div>
+            }
+        </div>
+    </div>
+</nav>

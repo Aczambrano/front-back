@@ -1,8 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { TransactionRequest, TransactionResponse } from '../interfaces/transaction.interface';
 import { AuthService } from './auth.service';
+import { TransactionRequest, TransactionResponse } from '../interfaces/transaction.interface';
 
 @Injectable({
   providedIn: 'root'

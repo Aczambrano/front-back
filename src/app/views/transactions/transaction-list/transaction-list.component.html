@@ -1,0 +1,37 @@
+<div class="transaction-list-container">
+    <h2>Lista de Transacciones</h2>
+    <div class="transaction-list-filters">
+        <label for="accountNumber">Número de Cuenta:</label>
+        <input type="text" id="accountNumber" [(ngModel)]="selectedAccountNumber" />
+          <button class="transaction-list-button" (click)="searchByAccountNumber()">Buscar</button>
+            <button class="transaction-list-button" (click)="openTransactionModal()">Crear Transacción</button>
+    </div>
+
+    @if(transactions.length > 0) {
+    <table class="transaction-list-table">
+        <thead>
+            <tr>
+                <th>Tipo</th>
+                <th>Monto</th>
+                <th>Costo</th>
+                 <th>Fecha</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (transaction of transactions; track transaction.transactionType) {
+                <tr>
+                    <td>{{ transaction.transactionType }}</td>
+                    <td>{{ transaction.amount }}</td>
+                    <td>{{ transaction.transactionCost }}</td>
+                     <td>{{ transaction.date | date:'medium' }}</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    } @else {
+     <p>No hay transacciones para mostrar</p>
+     }
+     @if(showTransactionModal) {
+        <app-transaction-modal [accountNumber]="selectedAccountNumber" (close)="closeTransactionModal()"></app-transaction-modal>
+     }
+</div>

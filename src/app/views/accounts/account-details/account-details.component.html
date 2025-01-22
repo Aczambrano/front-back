@@ -1,0 +1,63 @@
+<div class="account-details-container">
+    <h2>Detalles de la Cuenta</h2>
+    @if(account) {
+      <div class="account-details">
+          <form [formGroup]="accountForm" class="account-details__info">
+               <div class="account-details__group">
+                   <label class="account-details__label" for="accountNumber">Número de Cuenta:</label>
+                  <input type="text" class="account-details__input" formControlName="accountNumber" id="accountNumber" readonly>
+              </div>
+             <div class="account-details__group">
+                  <label class="account-details__label" for="owner">Propietario:</label>
+                  <input type="text" class="account-details__input" formControlName="owner" id="owner" readonly>
+              </div>
+             <div class="account-details__group">
+               <label class="account-details__label" for="balance">Saldo Inicial:</label>
+                   <input type="number" class="account-details__input" formControlName="balance" id="balance" readonly>
+              </div>
+              @if (accountForm.get('customerId')?.value) {
+              <div class="account-details__group">
+                   <label  class="account-details__label" for="customerId">Customer Id:</label>
+                  <input type="text"  class="account-details__input" formControlName="customerId" id="customerId" readonly>
+              </div>
+              }
+          </form>
+          <div class="account-details__actions">
+            <button class="account-details__update-button" (click)="openUpdateModal()">Actualizar Cuenta</button>
+             <div class="account-details__transactions">
+              <h3>Transacciones</h3>
+                  @if (transactions.length > 0) {
+                      <table class="account-details-table">
+                      <thead>
+                          <tr>
+                              <th>Tipo</th>
+                              <th>Monto</th>
+                              <th>Fecha</th>
+                          </tr>
+                          </thead>
+                      <tbody>
+                          @for(transaction of transactions; track transaction.transactionType) {
+                              <tr>
+                                  <td>{{ transaction.transactionType }}</td>
+                                  <td>{{ transaction.amount }}</td>
+                                  <td>{{ transaction.date | date:'medium' }}</td>
+                              </tr>
+                          }
+                          </tbody>
+                      </table>
+                  } @else {
+                     <p>No hay transacciones para mostrar</p>
+                  }
+                  <button class="account-details__transaction-button" (click)="openTransactionModal()">Hacer
+                      Transacción</button>
+              </div>
+          </div>
+      </div>
+      } @else {
+      <p>Cargando información de la cuenta...</p>
+      }
+      <app-transaction-modal *ngIf="showTransactionModal" [customerId]="account?.customerId ?? null"
+          [accountNumber]="account?.accountNumber ?? null" (close)="closeTransactionModal()"></app-transaction-modal>
+      <app-account-modal *ngIf="showUpdateModal" [accountNumber]="account?.accountNumber ?? null"
+          (close)="closeUpdateModal()"></app-account-modal>
+  </div>

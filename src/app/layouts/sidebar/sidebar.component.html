@@ -1,0 +1,26 @@
+<aside class="sidebar" [class.sidebar--collapsed]="isSidebarCollapsed">
+    <div class="sidebar__user-profile">
+        <div class="sidebar__avatar" >
+            <img src="assets/images/user-1.jpg" alt="">
+        </div>
+        <h2>Markarn Doe</h2>
+    </div>
+    <nav>
+        <button class="sidebar__toggle-btn" (click)="handleToggleSidebar()">☰
+            <span>Ocultar</span>
+        </button>
+
+        <a (click)="accounts()" routerLinkActive="active">
+            <i class="sidebar__icon">
+                    <img src="assets/images/account_balance.svg" alt="">
+            </i>
+            <span>Accounts</span>
+        </a>
+        <a (click)="transactions()" routerLinkActive="active">
+            <i class="sidebar__icon">
+                    <img src="assets/images/transaction.svg" alt="">
+            </i>
+            <span>Transactions</span>
+        </a>
+    </nav>
+</aside>
