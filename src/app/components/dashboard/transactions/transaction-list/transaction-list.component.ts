@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Transaction } from '../../../../interfaces/transaction.interface';
+import { TransactionResponse } from '../../../../interfaces/transaction.interface';
 import { TransactionService } from '../../../../services/transaction.service';
 import { FormsModule } from '@angular/forms';
 import { DatePipe } from '@angular/common';
@@ -11,21 +11,35 @@ import { DatePipe } from '@angular/common';
   styleUrl: './transaction-list.component.scss'
 })
 export class TransactionListComponent {
-  transactions: Transaction[] = [];
+  transactions: TransactionResponse[] = [];
   selectedAccountNumber: string = '';
+
+
   constructor(private transactionService: TransactionService) { }
 
   ngOnInit(): void {
     this.filterTransactions();
   }
+
+
   filterTransactions() {
-    this.transactionService.getTransactions(this.selectedAccountNumber).subscribe({
-      next: (transactions) => {
-        this.transactions = transactions;
-      },
-      error: (error) => {
-        console.error('Error loading transactions:', error);
-      }
-    })
+    if (this.selectedAccountNumber) {
+      this.transactionService.getTransactions(this.selectedAccountNumber).subscribe({
+        next: (transactionResponses) => {
+          if (transactionResponses && transactionResponses.length > 0) {
+            this.transactions = Array.isArray(transactionResponses[0])
+              ? transactionResponses[0]
+              : transactionResponses;
+          } else {
+            this.transactions = [];
+          }
+        },
+        error: (error) => {
+          console.error('Error loading transactions:', error);
+        }
+      });
+    } else {
+      this.transactions = [];
+    }
   }
 } 

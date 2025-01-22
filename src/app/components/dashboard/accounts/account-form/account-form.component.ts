@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
 import { AccountService } from '../../../../services/account.service';
-import { Account } from '../../../../interfaces/account.terface';
+import { AccountRequest, AccountResponse } from '../../../../interfaces/Account.interface';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -13,11 +13,20 @@ export class AccountFormComponent {
   @Input() accountNumber: string | null = null;
   @Output() close = new EventEmitter<void>();
 
-  accountData: Account = {
+  accountData: AccountRequest = {
     accountNumber: '',
     initialBalance: 0,
     owner: ''
   };
+
+  accountResponse: AccountResponse = {
+    customerId: '',
+    accountId:'',
+    owner: '',
+    accountNumber: '',
+    balance:0,
+  }  
+
   errorMessage: string | null = null;
   constructor(private accountService: AccountService) { }
 
@@ -36,7 +45,7 @@ export class AccountFormComponent {
   getAccountDetails() {
     this.accountService.getAccount(this.accountNumber!).subscribe({
       next: (account) => {
-        this.accountData = account;
+        this.accountResponse = account;
       },
       error: (error) => {
         this.errorMessage = 'Error obteniendo los datos de la cuenta'
@@ -54,6 +63,7 @@ export class AccountFormComponent {
   createAccount() {
     this.accountService.createAccount(this.accountData).subscribe({
       next: () => {
+        this.accountService.notifyAccountUpdated();
         this.close.emit();
       },
       error: (error) => {
@@ -65,6 +75,7 @@ export class AccountFormComponent {
   updateAccount() {
     this.accountService.updateAccount(this.accountData).subscribe({
       next: () => {
+        this.accountService.notifyAccountUpdated();
         this.close.emit();
       },
       error: (error) => {

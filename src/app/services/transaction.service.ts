@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Transaction } from '../interfaces/transaction.interface';
+import { TransactionRequest, TransactionResponse } from '../interfaces/transaction.interface';
 import { AuthService } from './auth.service';
 
 @Injectable({
@@ -20,15 +20,15 @@ export class TransactionService {
     });
   }
 
-  getTransactions(accountNumber: string): Observable<Transaction[]> {
-    return this.http.post<Transaction[]>(`${this.apiUrl}/transactions/accountNumber${accountNumber}`, { headers: this.getHeaders() });
+  getTransactions(accountNumber: string): Observable<TransactionResponse[]> {
+    return this.http.post<TransactionResponse[]>(`${this.apiUrl}/transactions/accountNumber`, {accountNumber},{ headers: this.getHeaders() });
   }
 
-  createDeposit(transactionData: Transaction): Observable<Transaction> {
-    return this.http.post<Transaction>(`${this.apiUrl}/transactions/deposit`, transactionData, { headers: this.getHeaders() });
+  createDeposit(transactionData: TransactionRequest): Observable<TransactionResponse> {
+    return this.http.post<TransactionResponse>(`${this.apiUrl}/transactions/deposit`, transactionData, { headers: this.getHeaders() });
   }
 
-  createWithdrawal(transactionData: Transaction): Observable<Transaction> {
-    return this.http.post<Transaction>(`${this.apiUrl}/transactions/withdrawal`, transactionData, { headers: this.getHeaders() });
+  createWithdrawal(transactionData: TransactionRequest): Observable<TransactionResponse> {
+    return this.http.post<TransactionResponse>(`${this.apiUrl}/transactions/withdrawal`, transactionData, { headers: this.getHeaders() });
   }
 }

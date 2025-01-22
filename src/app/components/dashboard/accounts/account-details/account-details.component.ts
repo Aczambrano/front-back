@@ -1,8 +1,8 @@
 import { Component, Input, SimpleChanges } from '@angular/core';
 import { TransactionModalComponent } from "../../modals/transaction-modal/transaction-modal.component";
 import { AccountModalComponent } from "../../modals/account-modal/account-modal.component";
-import { Account } from '../../../../interfaces/account.terface';
-import { Transaction } from '../../../../interfaces/transaction.interface';
+import { AccountResponse } from '../../../../interfaces/Account.interface';
+import { TransactionResponse } from '../../../../interfaces/transaction.interface';
 import { AccountService } from '../../../../services/account.service';
 import { TransactionService } from '../../../../services/transaction.service';
 import { DatePipe } from '@angular/common';
@@ -15,8 +15,8 @@ import { DatePipe } from '@angular/common';
 })
 export class AccountDetailsComponent {
   @Input() accountNumber: string | null = null;
-    account: Account | null = null;
-    transactions: Transaction[] = [];
+    account: AccountResponse | null = null;
+    transactions: TransactionResponse[] = [];
     showTransactionModal: boolean = false;
     showUpdateModal: boolean = false;
 
@@ -32,6 +32,7 @@ export class AccountDetailsComponent {
     loadAccountDetails() {
       this.accountService.getAccount(this.accountNumber!).subscribe({
          next: (account) => {
+          console.log(account+ "accounts")
            this.account = account;
          },
           error: (error) => {

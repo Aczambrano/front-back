@@ -5,7 +5,7 @@
         <div class="account-details__info">
             <p><strong>Número de Cuenta:</strong> {{ account.accountNumber }}</p>
             <p><strong>Propietario:</strong> {{ account.owner }}</p>
-            <p><strong>Saldo Inicial:</strong> {{ account.initialBalance }}</p>
+            <p><strong>Saldo Inicial:</strong> {{ account.balance }}</p>
             @if (account.customerId) {
             <p><strong>Customer Id:</strong> {{ account.customerId }}</p>
             }
@@ -28,7 +28,7 @@
                     <tr>
                         <td>{{ transaction.transactionType }}</td>
                         <td>{{ transaction.amount }}</td>
-                        <td>{{ transaction.createdAt | date:'medium' }}</td>
+                        <td>{{ transaction.date | date:'medium' }}</td>
                     </tr>
                     }
                 </tbody>

@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { AccountService } from '../../../../services/account.service';
-import { Account } from '../../../../interfaces/account.terface';
+import { AccountResponse } from '../../../../interfaces/Account.interface';
 import { AccountModalComponent } from "../../modals/account-modal/account-modal.component";
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-account-list',
@@ -10,15 +11,24 @@ import { AccountModalComponent } from "../../modals/account-modal/account-modal.
   styleUrl: './account-list.component.scss'
 })
 export class AccountListComponent {
-  accounts: Account[] = [];
+  accounts: AccountResponse[] = [];
   selectedAccount: string | null = null;
   showModal: boolean = false;
-
+  private accountUpdatedSubscription?: Subscription;
   constructor(private accountService: AccountService) { }
 
   ngOnInit(): void {
     this.loadAccounts();
+    this.accountUpdatedSubscription = this.accountService.accountUpdated$.subscribe(() =>{
+      this.loadAccounts();
+    });
   }
+
+  ngOnDestroy(): void {
+    if (this.accountUpdatedSubscription) {
+      this.accountUpdatedSubscription.unsubscribe();
+    }
+}
 
   loadAccounts() {
     this.accountService.getAllAccounts().subscribe({
@@ -30,6 +40,8 @@ export class AccountListComponent {
       }
     });
   }
+
+  
   showDetails(accountNumber: string) {
     this.selectedAccount = accountNumber;
     this.showModal = true;

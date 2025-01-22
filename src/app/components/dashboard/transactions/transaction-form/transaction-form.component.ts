@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
-import { Transaction } from '../../../../interfaces/transaction.interface';
+import { TransactionRequest } from '../../../../interfaces/transaction.interface';
 import { TransactionService } from '../../../../services/transaction.service';
 import { FormsModule } from '@angular/forms';
 
@@ -14,7 +14,7 @@ export class TransactionFormComponent {
   @Input() accountNumber: string | null = null;
   @Output() close = new EventEmitter<void>();
   errorMessage: string | null = null;
-  transactionData: Transaction = {
+  transactionData: TransactionRequest = {
       customerId: '',
       accountNumber: '',
       amount: 0,
