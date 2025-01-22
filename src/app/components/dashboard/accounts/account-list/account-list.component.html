@@ -15,17 +15,19 @@
         </thead>
         <tbody>
             @for (account of accounts; track account.accountNumber) {
-            <tr>
-                <td>{{ account.accountNumber }}</td>
-                <td>{{ account.owner }}</td>
-                <td>{{ account.initialBalance }}</td>
-                <td>
-                    <button class="account-list-button-details" (click)="showDetails(account.accountNumber)">Ver
-                        Detalles</button>
-                </td>
-            </tr>
+                <tr>
+                    <td>{{ account.accountNumber }}</td>
+                    <td>{{ account.owner }}</td>
+                    <td>{{ account.initialBalance }}</td>
+                    <td>
+                        <button class="account-list-button-details" (click)="showDetails(account.accountNumber)">Ver
+                            Detalles</button>
+                    </td>
+                </tr>
             }
         </tbody>
     </table>
-    <app-account-modal *ngIf="showModal" [accountNumber]="selectedAccount" (close)="closeModal()"></app-account-modal>
+   @if(showModal) {
+      <app-account-modal [accountNumber]="selectedAccount" (close)="closeModal()"></app-account-modal>
+   }
 </div>

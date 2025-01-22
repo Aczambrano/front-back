@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component} from '@angular/core';
+import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -16,19 +17,20 @@ export class LoginComponent {
   };
   errorMessage: string | null = null;
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private authService: AuthService) { }
 
   login() {
-    // Aquí iría la lógica de autenticación (llamada a un servicio, por ejemplo)
-    // Simulamos una autenticación exitosa
-    if (this.loginData.username === 'aczambrano' && this.loginData.password === 'password') {
-      this.router.navigate(['/dashboard']); // Navega al dashboard después del login
-    } else {
-      this.errorMessage = 'Credenciales incorrectas';
-    }
+    this.authService.login(this.loginData).subscribe({
+      next: (data) => {
+        this.authService.setToken(data.token);
+        this.router.navigate(['/dashboard']);
+      },
+      error: (error) => {
+        this.errorMessage = 'Credenciales incorrectas';
+      }
+    })
   }
-
-  register(){
-    this.router.navigate(['/register'])
+  register() {
+    this.router.navigate(['/register']);
   }
 }
