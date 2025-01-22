@@ -1,0 +1,56 @@
+.account-list-container {
+    padding: 20px;
+
+    h2 {
+        margin-bottom: 20px;
+        color: #333;
+    }
+
+    .account-list-actions {
+        margin-bottom: 10px;
+    }
+
+    .account-list-button {
+        background-color: #28a745;
+        color: #fff;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-right: 5px;
+
+        &:hover {
+            background-color: #218838;
+        }
+    }
+
+    .account-list-button-details {
+        background-color: #007bff;
+        color: #fff;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+
+        &:hover {
+            background-color: #0056b3;
+        }
+    }
+
+    .account-list-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    }
+}

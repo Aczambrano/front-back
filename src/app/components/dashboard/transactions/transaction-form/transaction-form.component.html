@@ -1,0 +1,53 @@
+<div class="transaction-form-container">
+    <h2>Realizar Transacción</h2>
+    <form (ngSubmit)="submitForm()" #transactionForm="ngForm" class="transaction-form">
+        <div class="transaction-form__group">
+            <label for="accountNumber" class="transaction-form__label">Número de Cuenta</label>
+            <input type="text" id="accountNumber" name="accountNumber" class="transaction-form__input" required
+                   [(ngModel)]="transactionData.accountNumber" #accountNumberInput="ngModel" [readonly]="accountNumber">
+            @if (accountNumberInput.invalid && (accountNumberInput.dirty || accountNumberInput.touched)) {
+              <div class="transaction-form__error">
+                 @if (accountNumberInput.errors?.['required']) {
+                     <div>El número de cuenta es requerido.</div>
+                   }
+              </div>
+            }
+        </div>
+        <div class="transaction-form__group">
+            <label for="amount" class="transaction-form__label">Monto</label>
+            <input type="number" id="amount" name="amount" class="transaction-form__input" required
+                [(ngModel)]="transactionData.amount" #amountInput="ngModel">
+              @if (amountInput.invalid && (amountInput.dirty || amountInput.touched)) {
+              <div class="transaction-form__error">
+                @if (amountInput.errors?.['required']) {
+                  <div>El monto es requerido.</div>
+                  }
+                </div>
+              }
+        </div>
+
+        <div class="transaction-form__group">
+            <label for="transactionType" class="transaction-form__label">Tipo de Transacción</label>
+            <select id="transactionType" name="transactionType" class="transaction-form__input" required
+                [(ngModel)]="transactionData.transactionType" #transactionTypeInput="ngModel">
+                <option value="" disabled selected>Seleccionar Tipo</option>
+                <option value="BRANCH_DEPOSIT">Depósito</option>
+                <option value="PHYSICAL_PURCHASE">Retiro</option>
+            </select>
+             @if(transactionTypeInput.invalid && (transactionTypeInput.dirty || transactionTypeInput.touched)) {
+               <div class="transaction-form__error">
+                 @if (transactionTypeInput.errors?.['required']) {
+                    <div>El tipo de transacción es requerido.</div>
+                    }
+              </div>
+            }
+        </div>
+        @if (errorMessage) {
+            <div class="auth-form__message auth-form__message--error">
+               {{ errorMessage }}
+            </div>
+        }
+        <button type="submit" class="transaction-form__button" [disabled]="transactionForm.invalid">Realizar
+            Transacción</button>
+    </form>
+</div>

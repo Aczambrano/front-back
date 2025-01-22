@@ -1,0 +1,31 @@
+<div class="account-list-container">
+    <h2>Lista de Cuentas Bancarias</h2>
+    <div class="account-list-actions">
+        <button class="account-list-button" (click)="openCreateModal()">Crear Cuenta</button>
+    </div>
+
+    <table class="account-list-table">
+        <thead>
+            <tr>
+                <th>Número de Cuenta</th>
+                <th>Propietario</th>
+                <th>Saldo</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (account of accounts; track account.accountNumber) {
+            <tr>
+                <td>{{ account.accountNumber }}</td>
+                <td>{{ account.owner }}</td>
+                <td>{{ account.initialBalance }}</td>
+                <td>
+                    <button class="account-list-button-details" (click)="showDetails(account.accountNumber)">Ver
+                        Detalles</button>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+    <app-account-modal *ngIf="showModal" [accountNumber]="selectedAccount" (close)="closeModal()"></app-account-modal>
+</div>

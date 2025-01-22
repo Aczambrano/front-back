@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent {
   loginData = {
-    email: '',
+    username: '',
     password: ''
   };
   errorMessage: string | null = null;
@@ -21,7 +21,7 @@ export class LoginComponent {
   login() {
     // Aquí iría la lógica de autenticación (llamada a un servicio, por ejemplo)
     // Simulamos una autenticación exitosa
-    if (this.loginData.email === 'test@example.com' && this.loginData.password === 'password') {
+    if (this.loginData.username === 'aczambrano' && this.loginData.password === 'password') {
       this.router.navigate(['/dashboard']); // Navega al dashboard después del login
     } else {
       this.errorMessage = 'Credenciales incorrectas';

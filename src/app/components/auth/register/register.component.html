@@ -4,31 +4,17 @@
   
       <form (ngSubmit)="register()" #registerForm="ngForm" class="auth-form__form">
         <div class="auth-form__group">
-          <label for="name" class="auth-form__label">Nombre Completo</label>
+          <label for="name" class="auth-form__label">Nombre de Usuario</label>
           <input type="text" id="name" name="name" class="auth-form__input" required [(ngModel)]="registerData.name" #nameInput="ngModel">
             @if(nameInput.invalid && (nameInput.dirty || nameInput.touched)) {
               <div class="auth-form__error">
                   @if (nameInput.errors?.['required']) {
-                       <div>El nombre es requerido.</div>
+                       <div>El nombre de usuario es requerido.</div>
                   }
               </div>
             }
         </div>
   
-        <div class="auth-form__group">
-          <label for="email" class="auth-form__label">Correo Electrónico</label>
-          <input type="email" id="email" name="email" class="auth-form__input" required [(ngModel)]="registerData.email" #emailInput="ngModel">
-            @if (emailInput.invalid && (emailInput.dirty || emailInput.touched)) {
-              <div class="auth-form__error">
-                  @if (emailInput.errors?.['required']) {
-                      <div>El email es requerido.</div>
-                  }
-                  @if (emailInput.errors?.['email']) {
-                       <div>El email no es válido.</div>
-                  }
-             </div>
-           }
-        </div>
   
         <div class="auth-form__group">
           <label for="password" class="auth-form__label">Contraseña</label>

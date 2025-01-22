@@ -1,0 +1,30 @@
+.sidebar {
+    width: 250px;
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-right: 1px solid #dee2e6;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+
+    nav ul {
+        padding: 0;
+        list-style: none;
+    }
+
+    nav ul li a {
+        display: block;
+        padding: 10px 15px;
+        text-decoration: none;
+        color: #495057;
+        border-radius: 4px;
+        transition: background-color 0.3s ease;
+
+        &:hover {
+            background-color: #e9ecef;
+        }
+
+        &.active {
+            background-color: #007bff;
+            color: #fff;
+        }
+    }
+}
