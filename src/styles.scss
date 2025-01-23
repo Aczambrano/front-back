@@ -4,19 +4,25 @@
     --gray-100: #f3f4f6;
     --gray-200: #e5e7eb;
     --gray-700: #374151;
-  }
-  
-  * {
+}
+
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-  }
-  
-  body {
+}
+
+body {
     font-family: system-ui, -apple-system, sans-serif;
     color: var(--gray-700);
-  }
-  
-  button {
+}
+
+button {
     font-family: inherit;
-  }
+}
+
+body::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+    background: transparent;
+}

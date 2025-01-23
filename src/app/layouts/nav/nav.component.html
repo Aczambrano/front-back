@@ -6,17 +6,12 @@
             @if (showMenu) {
             <div class="navbar__dropdown">
                 <a class="navbar__dropdown-item">
-                    <i class="navbar__icon">👤</i>
+                    <i class="navbar__icon">
+                        <img src="assets/images/profile.svg" alt="">
+                    </i>
                     My Profile
                 </a>
-                <a class="navbar__dropdown-item">
-                    <i class="navbar__icon">📧</i>
-                    My Account
-                </a>
-                <a class="navbar__dropdown-item">
-                    <i class="navbar__icon">📋</i>
-                    My Task
-                </a>
+
                 <button class="navbar__logout-btn" (click)="logout()">
                     Logout
                 </button>

@@ -1,201 +1,129 @@
 @if (account) {
     <div class="dashboard-summary">
-      <div class="summary-card">
-        <div class="summary-content">
-          <h3 class="summary-title">
-            <p>{{account?.owner}}</p>
-          </h3>
-          <span class="summary-description"> Acc. number: {{account?.accountNumber}}</span>
+        <div class="summary-card">
+            <div class="summary-content">
+                <h3 class="summary-title">
+                    <p>{{account?.owner}}</p>
+                </h3>
+                <span class="summary-description"> Acc. number: {{account?.accountNumber}}</span>
+            </div>
+            <div class="summary-image">
+                <img src="assets/images/user-1.jpg" alt="Julia Illustration" />
+            </div>
         </div>
-        <div class="summary-image">
-          <img src="assets/images/user-1.jpg" alt="Julia Illustration" />
+        <div class="summary-card">
+            <div class="summary-content">
+                <h3 class="summary-title">Current Balance</h3>
+                <div class="summary-value">
+                    <span>${{account?.balance}}</span>
+                </div>
+                <div class="summary-description">
+                    {{account?.status}}
+                </div>
+            </div>
+            <div class="summary-icon">
+                <img src="assets/images/cash.svg" alt="cash icon" />
+            </div>
         </div>
-      </div>
-      <div class="summary-card">
-        <div class="summary-content">
-          <h3 class="summary-title">Current Balance</h3>
-          <div class="summary-value">
-            <span>${{account?.balance}}</span>
-          </div>
-          <div class="summary-description">
-            {{account?.status}}
-          </div>
+        <div class="summary-card">
+            <div class="summary-content">
+                <h3 class="summary-title">Transactions</h3>
+                <div class="summary-value">
+                    <span>2,367</span>
+                </div>
+                <span class="summary-description">#Transactions</span>
+            </div>
+            <div class="summary-icon">
+                <img src="assets/images/view_transaction.svg" alt="view transaction icon" />
+            </div>
         </div>
-        <div class="summary-icon">
-            <img src="assets/images/cash.svg" alt="cash icon" />
-        </div>
-      </div>
-      <div class="summary-card">
-        <div class="summary-content">
-          <h3 class="summary-title">Transactions</h3>
-          <div class="summary-value">
-            <span>2,367</span>
-          </div>
-          <span class="summary-description">#Transactions</span>
-        </div>
-        <div class="summary-icon">
-            <img src="assets/images/view_transaction.svg" alt="view transaction icon" />
-        </div>
-      </div>
     </div>
     <div class="profile-card">
-      <div class="profile-header">
-        <img src="assets/images/user-1.jpg" alt="Profile Picture" class="profile-image">
-        <h2 class="profile-name">{{account?.owner}}</h2>
-      </div>
-      <div class="profile-details">
-        <div class="detail">
-          <span class="detail-label">Account Number:</span>
-          <span class="detail-value">{{ account?.accountNumber }}</span>
+        <div class="profile-header">
+            <img src="assets/images/user-1.jpg" alt="Profile Picture" class="profile-image">
+            <h2 class="profile-name">{{account?.owner}}</h2>
         </div>
-        <div class="detail">
-          <span class="detail-label">Balance:</span>
-          <span class="detail-value">${{ account?.balance }}</span>
+        <div class="profile-details">
+            <div class="detail">
+                <span class="detail-label">Account Number:</span>
+                <span class="detail-value">{{ account?.accountNumber }}</span>
+            </div>
+            <div class="detail">
+                <span class="detail-label">Balance:</span>
+                <span class="detail-value">${{ account?.balance }}</span>
+            </div>
+            <div class="detail">
+                <span class="detail-label">Status:</span>
+                <span class="detail-value">{{ account?.status }}</span>
+            </div>
         </div>
-        <div class="detail">
-          <span class="detail-label">Status:</span>
-          <span class="detail-value">{{ account?.status }}</span>
+        <div class="profile-stats">
+            <div class="stat">
+                <div class="stat-value">45</div>
+                <div class="stat-label">Fixed issue</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value">+5</div>
+                <div class="stat-label">años</div>
+            </div>
         </div>
-      </div>
-      <div class="profile-stats">
-        <div class="stat">
-          <div class="stat-value">45</div>
-          <div class="stat-label">Fixed issue</div>
-        </div>
-        <div class="stat">
-          <div class="stat-value">+5</div>
-          <div class="stat-label">años</div>
-        </div>
-      </div>
     </div>
-  
-      <div class="invoice-container">
-           <div class="invoice-card">
-              <div class="invoice-header">
-                  <div class="invoice-number">#101</div>
-              </div>
-              <div class="invoice-details">
-                  <div class="invoice-section">
-                      <div class="invoice-title">Order Date:</div>
-                      <div class="invoice-value">Wednesday, January 22, 2025</div>
-                      <div class="invoice-title">Account:</div>
-                      <div class="invoice-value">{{account?.accountNumber}}</div>
-                       <div class="invoice-title">Owner:</div>
-                      <div class="invoice-value">{{account?.owner}}</div>
-                  </div>
-              </div>
-              <table class="invoice-table">
-                  <thead>
-                      <tr>
-                          <th>Amount</th>
-                          <th>Cost</th>
-                          <th>Total Cost</th>
-                      </tr>
-                  </thead>
-                  <tbody>
-                      <tr>
-                          <td>Courge</td>
-                          <td>10</td>
-                          <td>9</td>
-                      </tr>
-                  </tbody>
-              </table>
-              <div class="invoice-total">
-                  <div class="subtotal">
-                      <span>Sub total:</span>
-                      <span>90</span>
-                  </div>
-                  <div class="grand-total">
-                      <span>Grand Total:</span>
-                      <span>99</span>
-                  </div>
-              </div>
-          </div>
-          <div class="invoice-card">
-              <div class="invoice-header">
-                  <div class="invoice-number">#102</div>
-              </div>
-              <div class="invoice-details">
-                  <div class="invoice-section">
-                      <div class="invoice-title">Order Date:</div>
-                      <div class="invoice-value">Wednesday, January 23, 2025</div>
-                       <div class="invoice-title">Account:</div>
-                      <div class="invoice-value">{{account?.accountNumber}}</div>
-                       <div class="invoice-title">Owner:</div>
-                      <div class="invoice-value">{{account?.owner}}</div>
-                  </div>
-              </div>
-              <table class="invoice-table">
-                  <thead>
-                      <tr>
-                          <th>Amount</th>
-                          <th>Cost</th>
-                          <th>Total Cost</th>
-                      </tr>
-                  </thead>
-                  <tbody>
-                      <tr>
-                          <td>Apple</td>
-                          <td>20</td>
-                          <td>2</td>
-                      </tr>
-                  </tbody>
-              </table>
-              <div class="invoice-total">
-                  <div class="subtotal">
-                      <span>Sub total:</span>
-                      <span>40</span>
-                  </div>
-                  <div class="grand-total">
-                      <span>Grand Total:</span>
-                      <span>44</span>
-                  </div>
-              </div>
-          </div>
-          <div class="invoice-card">
-              <div class="invoice-header">
-                  <div class="invoice-number">#103</div>
-              </div>
-              <div class="invoice-details">
-                  <div class="invoice-section">
-                      <div class="invoice-title">Order Date:</div>
-                      <div class="invoice-value">Wednesday, January 24, 2025</div>
-                       <div class="invoice-title">Account:</div>
-                      <div class="invoice-value">{{account?.accountNumber}}</div>
-                       <div class="invoice-title">Owner:</div>
-                      <div class="invoice-value">{{account?.owner}}</div>
-                  </div>
-              </div>
-              <table class="invoice-table">
-                  <thead>
-                      <tr>
-                          <th>Amount</th>
-                          <th>Cost</th>
-                          <th>Total Cost</th>
-                      </tr>
-                  </thead>
-                  <tbody>
-                      <tr>
-                          <td>Banana</td>
-                          <td>5</td>
-                          <td>20</td>
-                      </tr>
-                  </tbody>
-              </table>
-              <div class="invoice-total">
-                  <div class="subtotal">
-                      <span>Sub total:</span>
-                      <span>100</span>
-                  </div>
-                  <div class="grand-total">
-                      <span>Grand Total:</span>
-                      <span>110</span>
-                  </div>
-              </div>
-          </div>
-      </div>
-  } @else {
+    
+    <div class="invoice-container">
+        @for (transaction of displayedTransactions; track $index) {
+            <div class="invoice-card">
+                <div class="invoice-header">
+                    <div class="invoice-number">#{{transaction.transactionId}}</div>
+                </div>
+                <div class="invoice-details">
+                    <div class="invoice-section">
+                        <div class="invoice-title">Transaction Date:</div>
+                        <div class="invoice-value">{{transaction.date}}</div>
+                        <div class="invoice-title">Account:</div>
+                        <div class="invoice-value">{{transaction.accountId}}</div>
+                        <div class="invoice-title">Type:</div>
+                        <div class="invoice-value">{{transaction.transactionType}}</div>
+                    </div>
+                </div>
+                <table class="invoice-table">
+                    <thead>
+                        <tr>
+                            <th>Amount</th>
+                            <th>Cost</th>
+                            <th>Total Cost</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{transaction.amount}}</td>
+                            <td>{{transaction.transactionCost}}</td>
+                            <td>{{transaction.amount + transaction.transactionCost}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="invoice-total">
+                    <div class="subtotal">
+                        <span>Sub total:</span>
+                        <span>{{transaction.amount}}</span>
+                    </div>
+                    <div class="grand-total">
+                        <span>Grand Total:</span>
+                        <span>{{transaction.amount + transaction.transactionCost}}</span>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    @if(transactions && transactions.length > itemsPerPage) {
+        <div class="pagination" >
+            <button (click)="previousPage()" [disabled]="currentPage === 1">Previous</button>
+            <span>Page {{ currentPage }} of {{ totalPages }}</span>
+            <button (click)="nextPage()" [disabled]="currentPage === totalPages">Next</button>
+        </div>
+    }
+    
+} @else {
     <div class="profile-card">
-      <p>No se encontraron detalles de la cuenta</p>
+        <p>No se encontraron detalles de la cuenta</p>
     </div>
-  }
+}
