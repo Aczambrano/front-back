@@ -3,6 +3,7 @@ import { AccountModalComponent } from "../../modals/account-modal/account-modal.
 import { delay, of, Subscription, switchMap } from 'rxjs';
 import { AccountService } from '../../../services/account.service';
 import { AccountResponse } from '../../../interfaces/Account.interface';
+import { Route, Router } from '@angular/router';
 
 @Component({
   selector: 'app-account-list',
@@ -15,7 +16,7 @@ export class AccountListComponent implements OnInit {
   selectedAccount: string | null = null;
   showModal: boolean = false;
   private accountUpdatedSubscription?: Subscription;
-  constructor(private accountService: AccountService) {
+  constructor(private accountService: AccountService, private router: Router) {
 
     this.accountUpdatedSubscription = this.accountService.accountUpdated$.pipe(
       switchMap(() => of(null).pipe(delay(1000)))
@@ -48,7 +49,7 @@ export class AccountListComponent implements OnInit {
 
   showDetails(accountNumber: string) {
     this.selectedAccount = accountNumber;
-    this.showModal = true;
+    this.router.navigate(['/dashboard/account-detail'], { queryParams: { accountNumber: accountNumber } });
   }
 
   openCreateModal() {

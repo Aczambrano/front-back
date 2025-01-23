@@ -1,10 +1,11 @@
 .navbar {
   display: flex;
   justify-content: space-between;
-  align-items: center;
   padding: 1rem 1.5rem;
   background: white;
   border-bottom: 1px solid #e5e7eb;
+  align-items: center;
+  border-radius: 20px;
   
   &__actions {
     display: flex;

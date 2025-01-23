@@ -11,4 +11,5 @@ export interface AccountResponse {
     owner: string;
     accountNumber: string;
     balance: number;
+    status:string;
 }
