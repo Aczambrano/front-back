@@ -12,18 +12,20 @@ import { TransactionType } from '../../../interfaces/transaction-type.enum';
 })
 export class TransactionFormComponent {
   @Input() accountNumber: string | null = null;
+  @Input() balance: number | null = null;
   @Output() close = new EventEmitter<void>();
   errorMessage: string | null = null;
-  
+
   selectedType = TransactionType.ATM_DEPOSIT;
   transactionOptions = [
-    { value: TransactionType.BRANCH_DEPOSIT, label: 'Depósito en Sucursal' },
-    { value: TransactionType.ATM_DEPOSIT, label: 'Depósito en Cajero Automático' },
-    { value: TransactionType.OTHER_ACCOUNT_DEPOSIT, label: 'Depósito a Otra Cuenta' },
-    { value: TransactionType.PHYSICAL_PURCHASE, label: 'Compra Física' },
-    { value: TransactionType.ONLINE_PURCHASE, label: 'Compra en Línea' },
-    { value: TransactionType.ATM_WITHDRAWAL, label: 'Retiro en Cajero Automático' },
-];
+    { value: TransactionType.BRANCH_DEPOSIT, label: 'Depósito en Sucursal (0$)' },
+    { value: TransactionType.ATM_DEPOSIT, label: 'Depósito en Cajero Automático (2$)' },
+    { value: TransactionType.OTHER_ACCOUNT_DEPOSIT, label: 'Depósito a Otra Cuenta (1.5$)' },
+    { value: TransactionType.PHYSICAL_PURCHASE, label: 'Compra Física (0$)' },
+    { value: TransactionType.ONLINE_PURCHASE, label: 'Compra en Línea (5$)' },
+    { value: TransactionType.ATM_WITHDRAWAL, label: 'Retiro en Cajero Automático (1$)' },
+
+  ];
 
 
   transactionData: TransactionRequest = {
@@ -32,11 +34,16 @@ export class TransactionFormComponent {
     transactionType: ''
   };
 
-  constructor(private transactionService: TransactionService) { 
+
+  transactionCost: number = 0;
+
+  showConfirmationDialog: boolean = false;
+
+  constructor(private transactionService: TransactionService) {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    
+
     if (changes['accountNumber']) {
       if (this.accountNumber) {
         this.transactionData = {
@@ -47,39 +54,85 @@ export class TransactionFormComponent {
         this.errorMessage = null;
       }
     }
-  }
-  submitForm() {
-    if (this.transactionData.transactionType === (TransactionType.ATM_DEPOSIT || TransactionType.BRANCH_DEPOSIT || TransactionType.OTHER_ACCOUNT_DEPOSIT)) {
-      this.makeDeposit();
-    } else {
-      this.makeWithdrawal();
+
+    if (changes['balance'] && this.balance != null) {
+      this.balance = changes['balance'].currentValue;
+      console.log(this.balance)
     }
   }
 
+
+  calculateTransactionCost() {
+    this.transactionCost = 0;
+
+    switch (this.transactionData.transactionType) {
+      case TransactionType.ATM_DEPOSIT:
+        this.transactionCost = 2;
+        break;
+      case TransactionType.OTHER_ACCOUNT_DEPOSIT:
+        this.transactionCost = 1.5;
+        break;
+      case TransactionType.ONLINE_PURCHASE:
+        this.transactionCost = 5;
+        break;
+      case TransactionType.ATM_WITHDRAWAL:
+        this.transactionCost = 1;
+        break;
+    }
+  }
+
+
+  submitForm() {
+    this.showConfirmationDialog = true;
+  }
+
+  confirmTransaction(confirmed: boolean){
+     this.showConfirmationDialog = false;
+     if(confirmed){
+         if ((this.transactionData.transactionType === TransactionType.ATM_DEPOSIT) 
+        ||(this.transactionData.transactionType === TransactionType.BRANCH_DEPOSIT) 
+        ||(this.transactionData.transactionType === TransactionType.OTHER_ACCOUNT_DEPOSIT) 
+        ) {
+          this.makeDeposit();
+        } else {
+           this.makeWithdrawal();
+        }
+     }
+  }
+
   makeDeposit() {
-    this.transactionService.createDeposit(this.transactionData).subscribe({
+    const amountWithCost = this.transactionData.amount + this.transactionCost;
+
+    this.transactionService.createDeposit({ ...this.transactionData, amount: amountWithCost }).subscribe({
       next: () => {
         this.transactionService.notifyTransactionCreated(this.transactionData.accountNumber);
-        this.close.emit()
-        
+        this.close.emit();
+
       },
-      error: (error) => {
-        this.errorMessage = 'Error al realizar el deposito';
-        console.error('Error making deposit:', error);
+      error: (error: any) => {
+        if (error && error.error && error.error.message) {
+          this.errorMessage = error.error.message;
+        } else {
+          this.errorMessage = 'Ocurrió un error inesperado';
+        }
       }
-    })
+    });
   }
 
   makeWithdrawal() {
-    this.transactionService.createWithdrawal(this.transactionData).subscribe({
+    const amountWithCost = this.transactionData.amount + this.transactionCost;
+
+    this.transactionService.createWithdrawal({ ...this.transactionData, amount: amountWithCost }).subscribe({
       next: () => {
         this.transactionService.notifyTransactionCreated(this.transactionData.accountNumber);
-
-        this.close.emit()
+        this.close.emit();
       },
-      error: (error) => {
-        this.errorMessage = 'Error al realizar el retiro'
-        console.error('Error making withdraw:', error)
+      error: (error: any) => {
+        if (error && error.error && error.error.message) {
+          this.errorMessage = error.error.message;
+        } else {
+          this.errorMessage = 'Ocurrió un error inesperado';
+        }
       }
     });
   }

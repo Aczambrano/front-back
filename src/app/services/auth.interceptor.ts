@@ -1,0 +1,50 @@
+import {
+    HttpInterceptorFn,
+    HttpErrorResponse,
+    HttpRequest,
+    HttpHandlerFn
+} from '@angular/common/http';
+import { throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import { AuthService } from '../services/auth.service';
+import { Router } from '@angular/router';
+import { inject } from '@angular/core';
+import { JwtHelperService } from '@auth0/angular-jwt';
+
+export const AuthInterceptor: HttpInterceptorFn = (req, next) => {
+    const authService = inject(AuthService);
+    const router = inject(Router);
+    const jwtHelper = new JwtHelperService();
+
+    const token = authService.getToken();
+    let request = req;
+
+
+    if (token) {
+        const isTokenExpired = jwtHelper.isTokenExpired(token)
+        if(isTokenExpired){
+            authService.removeToken();
+            authService.setUsername("");
+            router.navigate(['/login']);
+            return throwError(() => new Error('Token expirado'));
+        }
+
+         request = req.clone({
+           setHeaders: {
+             Authorization: `Bearer ${token}`,
+           },
+         });
+       }
+
+    return next(request).pipe(
+        catchError((error: HttpErrorResponse) => {
+            if (error.status === 401) {
+                authService.removeToken();
+                authService.setUsername("");
+                router.navigate(['/login']);
+                return throwError(() => new Error('No autorizado'));
+            }
+            return throwError(() => error);
+        })
+    );
+};

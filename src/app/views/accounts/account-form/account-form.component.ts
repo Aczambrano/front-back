@@ -44,7 +44,6 @@ export class AccountFormComponent implements OnChanges {
       },
       error: (error) => {
         this.errorMessage = 'Error obteniendo los datos de la cuenta'
-        console.error('Error getting account details:', error);
       }
     })
   }
@@ -65,8 +64,7 @@ export class AccountFormComponent implements OnChanges {
         this.close.emit();
       },
       error: (error) => {
-        this.errorMessage = 'Error al crear la cuenta';
-        console.error('Error creating account:', error);
+        this.errorMessage = error.error.message;
       }
     });
   }
@@ -83,8 +81,7 @@ export class AccountFormComponent implements OnChanges {
         this.close.emit();
       },
       error: (error) => {
-        this.errorMessage = 'Error al actualizar la cuenta';
-        console.error('Error updating account:', error);
+        this.errorMessage = error.error.message;
       }
     });
   }

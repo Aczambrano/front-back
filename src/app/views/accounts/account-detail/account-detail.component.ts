@@ -19,6 +19,7 @@ import { DatePipe } from '@angular/common';
 })
 export class AccountDetailComponent implements OnInit, OnDestroy {
   accountNumber: string | null = null;
+  balance: number | null = null;
   account: AccountResponse | null = null;
   transactions: TransactionResponse[] = [];
   currentPage = 1;
@@ -86,6 +87,8 @@ export class AccountDetailComponent implements OnInit, OnDestroy {
       this.accountService.getAccount(this.accountNumber).subscribe({
         next: (accountResponse) => {
           this.account = accountResponse;
+          this.balance = accountResponse.balance
+          console.log(this.balance)
         },
         error: (error) => {
           console.error('Error loading account details:', error);

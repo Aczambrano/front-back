@@ -54,8 +54,6 @@ export class AuthService {
     decodeTokenAndGetUsername(token: string): string | null {
         try {
             const decodedToken = this.jwtHelper.decodeToken(token);
-            // Aquí asumimos que el nombre de usuario está en decodedToken.sub
-            // Ajusta según la estructura de tu token
             return decodedToken && decodedToken.sub || null;
         } catch (error) {
             console.error('Error decoding token:', error);

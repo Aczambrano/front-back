@@ -20,6 +20,7 @@
             @for (transaction of transactions; track transaction.transactionType) {
                 <tr>
                     <td>{{ transaction.transactionType }}</td>
+                    
                     <td>{{ transaction.amount }}</td>
                     <td>{{ transaction.transactionCost }}</td>
                      <td>{{ transaction.date | date:'medium' }}</td>

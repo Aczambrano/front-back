@@ -109,7 +109,6 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        /*  Distribute space to push buttons right */
         padding: 1.5rem;
         border-bottom: 1px solid #e5e7eb;
 
@@ -129,7 +128,6 @@
             }
         }
 
-        /*  NEW styles for the buttons container */
         .profile-actions {
             display: flex;
             gap: 0.5rem;
@@ -139,9 +137,7 @@
                 border-radius: 4px;
                 cursor: pointer;
                 border: none;
-                /*  Remove default border */
                 background-color: #007bff;
-                /*  Example: Blue background */
                 color: white;
                 font-size: 0.9rem;
                 transition: background-color 0.2s;
@@ -151,7 +147,6 @@
                 }
             }
 
-            /*  Optional: Style each button type differently */
             .edit-button {
                 background-color: #28a745;
 
@@ -372,16 +367,16 @@
 
 
 .modal-overlay {
-    position: fixed; /* Cubre toda la ventana */
+    position: fixed; 
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Fondo semi-transparente */
+    background-color: rgba(0, 0, 0, 0.5); 
     display: flex;
-    justify-content: center; /* Centrado horizontal */
-    align-items: center; /* Centrado vertical */
-    z-index: 1000; /* Asegura que esté por encima de otros elementos */
+    justify-content: center; 
+    align-items: center; 
+    z-index: 1000;
 }
 
 .modal {
@@ -389,9 +384,9 @@
     padding: 20px;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    width: 80%; /* Ajusta el ancho según sea necesario */
-    max-width: 600px; /* Ancho máximo */
-    position: relative; /* Necesario para posicionar el botón de cierre */
+    width: 80%;
+    max-width: 600px;
+    position: relative; 
 }
 
 .modal-close-button {
@@ -408,4 +403,49 @@
 
 .modal-close-button:hover {
     color: #333;
+}
+
+.container-with-info{
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    
+
+}
+.container-with-info > .profile-card{
+    width: 50%;
+    &:nth-child(1) {
+        width: 102%;
+    }
+}
+.info-card {
+    width: 50%;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+        background-color: #f5f5f5;
+    }
+
+    h3 {
+        font-size: 1.2rem;
+        margin-bottom: 1rem;
+    }
+
+    ul {
+        list-style: none;
+        padding: 0;
+
+        li {
+            margin-bottom: 0.75rem;
+            line-height: 1.4;
+        }
+
+        strong {
+            font-weight: 600;
+        }
+    }
 }

@@ -9,6 +9,8 @@ import { TransactionFormComponent } from "../../transactions/transaction-form/tr
 })
 export class TransactionModalComponent {
   @Input() accountNumber: string | null = null;
+  @Input() balance: number | null = null;
+
   @Output() close = new EventEmitter<void>();
 
   closeModal() {
