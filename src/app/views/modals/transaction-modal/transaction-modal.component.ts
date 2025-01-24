@@ -8,11 +8,10 @@ import { TransactionFormComponent } from "../../transactions/transaction-form/tr
   styleUrl: './transaction-modal.component.scss'
 })
 export class TransactionModalComponent {
-  @Input() customerId: string | null = null;
-    @Input() accountNumber: string | null = null;
-    @Output() close = new EventEmitter<void>();
+  @Input() accountNumber: string | null = null;
+  @Output() close = new EventEmitter<void>();
 
-    closeModal() {
-        this.close.emit();
-    }
+  closeModal() {
+    this.close.emit();
+  }
 }

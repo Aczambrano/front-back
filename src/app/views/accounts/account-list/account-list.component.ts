@@ -4,10 +4,11 @@ import { delay, of, Subscription, switchMap } from 'rxjs';
 import { AccountService } from '../../../services/account.service';
 import { AccountResponse } from '../../../interfaces/Account.interface';
 import { Route, Router } from '@angular/router';
+import { LoaderComponent } from "../../../components/loader/loader.component";
 
 @Component({
   selector: 'app-account-list',
-  imports: [AccountModalComponent],
+  imports: [AccountModalComponent, LoaderComponent],
   templateUrl: './account-list.component.html',
   styleUrl: './account-list.component.scss'
 })
@@ -15,14 +16,24 @@ export class AccountListComponent implements OnInit {
   accounts: AccountResponse[] = [];
   selectedAccount: string | null = null;
   showModal: boolean = false;
+  showLoader: boolean = false;
+
+
+
   private accountUpdatedSubscription?: Subscription;
   constructor(private accountService: AccountService, private router: Router) {
 
     this.accountUpdatedSubscription = this.accountService.accountUpdated$.pipe(
-      switchMap(() => of(null).pipe(delay(1000)))
-    ).subscribe(() => {
-      this.loadAccounts();
-    });
+      switchMap(() => {
+        this.showLoader = true;
+        return of(null).pipe(delay(1000));
+      })
+    )
+      .subscribe(() => {
+        this.showLoader = false;
+        this.loadAccounts();
+      });
+
   }
 
   ngOnInit(): void {
@@ -39,6 +50,7 @@ export class AccountListComponent implements OnInit {
     this.accountService.getAllAccounts().subscribe({
       next: (accounts) => {
         this.accounts = accounts;
+        console.log(accounts)
       },
       error: (error) => {
         console.error('Error loading accounts:', error);

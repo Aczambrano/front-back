@@ -45,13 +45,6 @@ export class TransactionListComponent {
     }
   }
 
-  openTransactionModal(){
-    this.showTransactionModal = true;
-  }
-  closeTransactionModal(){
-    this.showTransactionModal = false;
-    this.filterTransactions();
-  }
   searchByAccountNumber(){
     this.filterTransactions();
   }

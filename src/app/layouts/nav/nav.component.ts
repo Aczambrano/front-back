@@ -1,6 +1,7 @@
 import { Component, EventEmitter, HostListener, Output } from '@angular/core';
 import { SidebarComponent } from "../sidebar/sidebar.component";
 import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-nav',
@@ -12,7 +13,9 @@ export class NavComponent {
   showMenu = false;
    @Output() toggleSidebar = new EventEmitter<void>()
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, 
+              private authService: AuthService
+  ) { }
 
   toggleMenu(event: Event) {
     event.stopPropagation();
@@ -27,6 +30,8 @@ export class NavComponent {
         this.toggleSidebar.emit();
     }
   logout() {
+    this.authService.removeToken(); 
+
     this.router.navigate(['/login']);
   }
 }

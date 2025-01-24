@@ -3,6 +3,7 @@ import { RouterOutlet } from '@angular/router';
 import { SidebarComponent } from '../../layouts/sidebar/sidebar.component';
 import { NavComponent } from "../nav/nav.component";
 import { filter, map, mergeMap, of, tap } from 'rxjs';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-dashboard',
@@ -16,4 +17,5 @@ export class DashboardComponent {
     toggleSidebar(){
         this.isSidebarCollapsed = !this.isSidebarCollapsed;
     }
+
 }

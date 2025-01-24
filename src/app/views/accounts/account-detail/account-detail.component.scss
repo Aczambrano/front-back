@@ -108,6 +108,8 @@
     .profile-header {
         display: flex;
         align-items: center;
+        justify-content: space-between;
+        /*  Distribute space to push buttons right */
         padding: 1.5rem;
         border-bottom: 1px solid #e5e7eb;
 
@@ -119,8 +121,52 @@
         }
 
         .profile-name {
-            font-size: 1.125rem;
-            font-weight: 600;
+            display: flex;
+            align-items: center;
+            h2 {
+                font-size: 1.125rem;
+                font-weight: 600;
+            }
+        }
+
+        /*  NEW styles for the buttons container */
+        .profile-actions {
+            display: flex;
+            gap: 0.5rem;
+
+            button {
+                padding: 0.5rem 1rem;
+                border-radius: 4px;
+                cursor: pointer;
+                border: none;
+                /*  Remove default border */
+                background-color: #007bff;
+                /*  Example: Blue background */
+                color: white;
+                font-size: 0.9rem;
+                transition: background-color 0.2s;
+
+                &:hover {
+                    background-color: #0056b3;
+                }
+            }
+
+            /*  Optional: Style each button type differently */
+            .edit-button {
+                background-color: #28a745;
+
+                &:hover {
+                    background-color: #1e7e34;
+                }
+            }
+
+            .transaction-button {
+                background-color: #dc3545;
+
+                &:hover {
+                    background-color: #c82333;
+                }
+            }
         }
     }
 
@@ -176,14 +222,13 @@
     display: flex;
     flex-wrap: wrap;
     margin-top: 1rem;
-    justify-content: space-between;
-
+    gap: 1rem;
     .invoice-card {
         background-color: #fff;
         border-radius: 8px;
         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         padding: 1.5rem;
-        width: calc(33.33% - 1rem);
+        width: calc(33.33% - 0.7rem);
         box-sizing: border-box;
         transition: background-color 0.3s ease;
         margin-bottom: 1rem;
@@ -238,13 +283,9 @@
         }
 
         .invoice-details {
-            display: flex;
-            justify-content: space-between;
             margin-bottom: 1.5rem;
 
             .invoice-section {
-                width: 50%;
-
                 .invoice-title {
                     font-size: 1rem;
                     color: #6b7280;
@@ -327,4 +368,44 @@
             cursor: not-allowed;
         }
     }
+}
+
+
+.modal-overlay {
+    position: fixed; /* Cubre toda la ventana */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo semi-transparente */
+    display: flex;
+    justify-content: center; /* Centrado horizontal */
+    align-items: center; /* Centrado vertical */
+    z-index: 1000; /* Asegura que esté por encima de otros elementos */
+}
+
+.modal {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    width: 80%; /* Ajusta el ancho según sea necesario */
+    max-width: 600px; /* Ancho máximo */
+    position: relative; /* Necesario para posicionar el botón de cierre */
+}
+
+.modal-close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: #666;
+    padding: 0;
+}
+
+.modal-close-button:hover {
+    color: #333;
 }

@@ -9,9 +9,9 @@ import { AccountFormComponent } from '../../accounts/account-form/account-form.c
 })
 export class AccountModalComponent {
   @Input() accountNumber: string | null = null;
-    @Output() close = new EventEmitter<void>();
+  @Output() close = new EventEmitter<void>();
 
-    closeModal() {
-        this.close.emit();
-    }
+  closeModal() {
+    this.close.emit();
+  }
 }

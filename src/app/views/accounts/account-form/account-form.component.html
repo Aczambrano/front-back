@@ -3,7 +3,7 @@
       <form [formGroup]="accountForm" (ngSubmit)="submitForm()" class="account-form">
         <div class="account-form__group">
           <label for="accountNumber" class="account-form__label">Número de Cuenta</label>
-            <input type="text" id="accountNumber" class="account-form__input" formControlName="accountNumber" >
+            <input type="text" id="accountNumber" class="account-form__input" formControlName="accountNumber" [readonly]="accountNumber ? true : false">
             @if(accountForm.get('accountNumber')?.invalid && (accountForm.get('accountNumber')?.dirty || accountForm.get('accountNumber')?.touched)) {
               <div class="account-form__error">
                 @if (accountForm.get('accountNumber')?.errors?.['required']) {

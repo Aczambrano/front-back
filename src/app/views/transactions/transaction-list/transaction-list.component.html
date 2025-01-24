@@ -4,7 +4,6 @@
         <label for="accountNumber">Número de Cuenta:</label>
         <input type="text" id="accountNumber" [(ngModel)]="selectedAccountNumber" />
           <button class="transaction-list-button" (click)="searchByAccountNumber()">Buscar</button>
-            <button class="transaction-list-button" (click)="openTransactionModal()">Crear Transacción</button>
     </div>
 
     @if(transactions.length > 0) {
@@ -30,8 +29,5 @@
     </table>
     } @else {
      <p>No hay transacciones para mostrar</p>
-     }
-     @if(showTransactionModal) {
-        <app-transaction-modal [accountNumber]="selectedAccountNumber" (close)="closeTransactionModal()"></app-transaction-modal>
      }
 </div>

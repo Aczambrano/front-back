@@ -39,7 +39,7 @@ export class AccountService {
   }
 
   updateAccount(accountData: AccountRequest): Observable<AccountResponse> {
-    return this.http.put<AccountResponse>(`${this.apiUrl}/accounts/update`, accountData, { headers: this.getHeaders() });
+    return this.http.post<AccountResponse>(`${this.apiUrl}/accounts/update`, accountData, { headers: this.getHeaders() });
   }
 
   notifyAccountUpdated(): void {
