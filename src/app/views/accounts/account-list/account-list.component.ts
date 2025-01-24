@@ -50,7 +50,6 @@ export class AccountListComponent implements OnInit {
     this.accountService.getAllAccounts().subscribe({
       next: (accounts) => {
         this.accounts = accounts;
-        console.log(accounts)
       },
       error: (error) => {
         console.error('Error loading accounts:', error);

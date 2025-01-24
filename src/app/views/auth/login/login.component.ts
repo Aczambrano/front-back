@@ -31,7 +31,6 @@ export class LoginComponent implements OnInit {
                 next: (data) => {
                     this.authService.setToken(data.token);
                     const username = this.authService.decodeTokenAndGetUsername(data.token);
-                    console.log(username)
                     if(username) {
                       this.authService.setUsername(username);
                       this.router.navigate(['/dashboard/accounts']);

@@ -57,7 +57,6 @@ export class TransactionFormComponent {
 
     if (changes['balance'] && this.balance != null) {
       this.balance = changes['balance'].currentValue;
-      console.log(this.balance)
     }
   }
 
@@ -86,24 +85,35 @@ export class TransactionFormComponent {
     this.showConfirmationDialog = true;
   }
 
-  confirmTransaction(confirmed: boolean){
-     this.showConfirmationDialog = false;
-     if(confirmed){
-         if ((this.transactionData.transactionType === TransactionType.ATM_DEPOSIT) 
-        ||(this.transactionData.transactionType === TransactionType.BRANCH_DEPOSIT) 
-        ||(this.transactionData.transactionType === TransactionType.OTHER_ACCOUNT_DEPOSIT) 
-        ) {
-          this.makeDeposit();
-        } else {
-           this.makeWithdrawal();
-        }
-     }
+  confirmTransaction(confirmed: boolean) {
+    this.showConfirmationDialog = false;
+    if (confirmed) {
+      if ((this.transactionData.transactionType === TransactionType.ATM_DEPOSIT)
+        || (this.transactionData.transactionType === TransactionType.BRANCH_DEPOSIT)
+        || (this.transactionData.transactionType === TransactionType.OTHER_ACCOUNT_DEPOSIT)
+      ) {
+        this.makeDeposit();
+      } else {
+        this.makeWithdrawal();
+      }
+    }
   }
 
   makeDeposit() {
-    const amountWithCost = this.transactionData.amount + this.transactionCost;
+    if (this.balance === null || this.balance === undefined) {
+      this.errorMessage = 'No se pudo obtener el balance de la cuenta';
+      return;
+    }
 
-    this.transactionService.createDeposit({ ...this.transactionData, amount: amountWithCost }).subscribe({
+    const balanceWithAmount = this.balance + this.transactionData.amount;
+
+    if (this.transactionCost > balanceWithAmount) {
+
+      this.errorMessage = 'La transacción más el costo debe ser mayor al balance'
+      return
+    }
+
+    this.transactionService.createDeposit(this.transactionData).subscribe({
       next: () => {
         this.transactionService.notifyTransactionCreated(this.transactionData.accountNumber);
         this.close.emit();
@@ -121,8 +131,18 @@ export class TransactionFormComponent {
 
   makeWithdrawal() {
     const amountWithCost = this.transactionData.amount + this.transactionCost;
+    if (this.balance === null || this.balance === undefined) {
+      this.errorMessage = 'No se pudo obtener el balance de la cuenta';
+      return;
+    }
 
-    this.transactionService.createWithdrawal({ ...this.transactionData, amount: amountWithCost }).subscribe({
+    if (amountWithCost > this.balance) {
+      this.errorMessage = 'La transacción más el costo debe ser mayor al balance'
+      return
+    }
+
+
+    this.transactionService.createWithdrawal(this.transactionData).subscribe({
       next: () => {
         this.transactionService.notifyTransactionCreated(this.transactionData.accountNumber);
         this.close.emit();

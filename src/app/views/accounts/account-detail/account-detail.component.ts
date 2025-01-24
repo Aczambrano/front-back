@@ -88,7 +88,6 @@ export class AccountDetailComponent implements OnInit, OnDestroy {
         next: (accountResponse) => {
           this.account = accountResponse;
           this.balance = accountResponse.balance
-          console.log(this.balance)
         },
         error: (error) => {
           console.error('Error loading account details:', error);

@@ -13,13 +13,12 @@ export class SidebarComponent implements OnDestroy{
 
   @Output() toggleSidebar = new EventEmitter<void>();
 
-  isSidebarCollapsed = false; // Nueva propiedad para controlar el estado del sidebar
+  isSidebarCollapsed = false; 
   username: string | null = null;
   usernameSubscription: Subscription;
 
   constructor(private router: Router, private authService: AuthService) {
     this.usernameSubscription = this.authService.username$.subscribe(username => {
-      console.log(username)
       this.username = username
     })
   }
@@ -33,8 +32,8 @@ export class SidebarComponent implements OnDestroy{
   }
 
   handleToggleSidebar() {
-    this.isSidebarCollapsed = !this.isSidebarCollapsed; // Cambia el estado del sidebar
-    this.toggleSidebar.emit(); // Emite el evento (si lo necesitas para otras partes de la app)
+    this.isSidebarCollapsed = !this.isSidebarCollapsed; 
+    this.toggleSidebar.emit(); 
   }
 
   ngOnDestroy(): void {
