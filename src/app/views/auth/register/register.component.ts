@@ -1,37 +1,60 @@
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthService } from '../../../services/auth.service'; // Importa el servicio AuthService
 
 @Component({
-  selector: 'app-register',
-  imports: [FormsModule], 
-  templateUrl: './register.component.html',
-  styleUrl: './register.component.scss'
+    selector: 'app-register',
+    standalone: true,
+    imports: [ReactiveFormsModule, CommonModule],
+    templateUrl: './register.component.html',
+    styleUrl: './register.component.scss'
 })
-export class RegisterComponent {
-  registerData = {
-    name: '',
-    email: '',
-    password: '',
-    role: ''
-  };
+export class RegisterComponent implements OnInit {
+    registerForm: FormGroup;
+    errorMessage: string | null = null;
 
-  errorMessage: string | null = null;
-
-  constructor(private router: Router) { }
-
-  register() {
-    // Aquí iría la lógica de registro (llamada a un servicio, por ejemplo)
-    // Simulamos un registro exitoso
-    if (this.registerData.name && this.registerData.email && this.registerData.password && this.registerData.role) {
-      this.router.navigate(['/login']); // Navega al login después del registro
-    } else {
-      this.errorMessage = 'Por favor, completa todos los campos.';
+    constructor(private router: Router, private authService: AuthService) {
+        this.registerForm = new FormGroup({
+            username: new FormControl('', [Validators.required]),
+            password: new FormControl('', [Validators.required]),
+            roles: new FormControl('', [Validators.required]),
+        });
     }
-  }
 
-  login(){
-    this.router.navigate(['/login'])
-  }
+    ngOnInit(): void {
+    }
+
+    register() {
+        if (this.registerForm.valid) {
+            this.authService.register(this.registerForm.value).subscribe({
+                next: (data) => {
+                    this.router.navigate(['/login']); 
+                },
+                error: (error) => {
+                    this.errorMessage = 'Error en el registro. Por favor, inténtelo de nuevo.';
+                }
+            });
+        } else {
+            this.errorMessage = 'Por favor, completa el formulario correctamente';
+        }
+    }
+
+
+    login() {
+        this.router.navigate(['/login']);
+    }
+
+    get nameControl() {
+        return this.registerForm.get('username');
+    }
+
+    get passwordControl() {
+        return this.registerForm.get('password');
+    }
+
+    get roleControl() {
+        return this.registerForm.get('roles');
+    }
 }

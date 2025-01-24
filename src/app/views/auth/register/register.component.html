@@ -1,59 +1,53 @@
 <div class="auth-container">
-    <div class="auth-form">
+  <div class="auth-form">
       <h2 class="auth-form__title">Registro</h2>
-  
-      <form (ngSubmit)="register()" #registerForm="ngForm" class="auth-form__form">
-        <div class="auth-form__group">
-          <label for="name" class="auth-form__label">Nombre de Usuario</label>
-          <input type="text" id="name" name="name" class="auth-form__input" required [(ngModel)]="registerData.name" #nameInput="ngModel">
-            @if(nameInput.invalid && (nameInput.dirty || nameInput.touched)) {
+      <form [formGroup]="registerForm" (ngSubmit)="register()" class="auth-form__form">
+          <div class="auth-form__group">
+              <label for="name" class="auth-form__label">Nombre de Usuario</label>
+              <input type="text" id="username" formControlName="username" class="auth-form__input">
+              @if(nameControl?.invalid && (nameControl?.dirty || nameControl?.touched)) {
               <div class="auth-form__error">
-                  @if (nameInput.errors?.['required']) {
-                       <div>El nombre de usuario es requerido.</div>
+                  @if (nameControl?.errors?.['required']) {
+                  <div>El nombre de usuario es requerido.</div>
                   }
               </div>
-            }
-        </div>
-  
-  
-        <div class="auth-form__group">
-          <label for="password" class="auth-form__label">Contraseña</label>
-          <input type="password" id="password" name="password" class="auth-form__input" required [(ngModel)]="registerData.password" #passwordInput="ngModel">
-             @if(passwordInput.invalid && (passwordInput.dirty || passwordInput.touched)) {
-              <div class="auth-form__error">
-                  @if (passwordInput.errors?.['required']) {
-                      <div>La contraseña es requerida.</div>
-                  }
-              </div>
-          }
-        </div>
-        
-        <div class="auth-form__group">
-            <label for="role" class="auth-form__label">Rol</label>
-            <select id="role" name="role" class="auth-form__input" required [(ngModel)]="registerData.role" #roleInput="ngModel">
-              <option value="" disabled selected>Seleccionar Rol</option>
-              <option value="USER">Usuario</option>
-              <option value="ADMIN">Administrador</option>
-            </select>
-              @if (roleInput.invalid && (roleInput.dirty || roleInput.touched)) {
-                <div class="auth-form__error">
-                    @if (roleInput.errors?.['required']) {
-                        <div>El rol es requerido.</div>
-                    }
-                </div>
-            }
+              }
           </div>
-
-
-        <button type="submit" class="auth-form__button" [disabled]="registerForm.invalid">Registrar</button>
+          <div class="auth-form__group">
+              <label for="password" class="auth-form__label">Contraseña</label>
+              <input type="password" id="password" formControlName="password" class="auth-form__input">
+              @if(passwordControl?.invalid && (passwordControl?.dirty || passwordControl?.touched)) {
+              <div class="auth-form__error">
+                  @if (passwordControl?.errors?.['required']) {
+                  <div>La contraseña es requerida.</div>
+                  }
+              </div>
+              }
+          </div>
+          <div class="auth-form__group">
+              <label for="roles" class="auth-form__label">Rol</label>
+              <select id="roles" formControlName="roles" class="auth-form__input">
+                  <option value="" disabled selected>Seleccionar Rol</option>
+                  <option value="USER">Usuario</option>
+                  <option value="ADMIN">Administrador</option>
+              </select>
+                @if (roleControl?.invalid && (roleControl?.dirty || roleControl?.touched)) {
+                  <div class="auth-form__error">
+                      @if (roleControl?.errors?.['required']) {
+                          <div>El rol es requerido.</div>
+                      }
+                  </div>
+              }
+          </div>
+          <button type="submit" class="auth-form__button" [disabled]="registerForm.invalid">Registrar</button>
       </form>
       <p class="auth-form__link">
-        ¿Ya tienes una cuenta? <span class="auth-form__link-button" (click)="login()" role="button">Iniciar Sesión</span>
+          ¿Ya tienes una cuenta? <span class="auth-form__link-button" (click)="login()" role="button">Iniciar Sesión</span>
       </p>
-        @if (errorMessage) {
-            <div class="auth-form__message auth-form__message--error">
-             {{ errorMessage }}
-          </div>
-        }
-    </div>
+      @if (errorMessage) {
+          <div class="auth-form__message auth-form__message--error">
+           {{ errorMessage }}
+        </div>
+      }
   </div>
+</div>

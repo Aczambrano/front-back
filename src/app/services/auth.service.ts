@@ -1,15 +1,24 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-
-  private apiUrl = 'http://localhost:8080/api/v1';  
+    private apiUrl = 'http://localhost:8080/api/v1';  
     private tokenKey = 'authToken';
-    constructor(private http: HttpClient) { }
+    private usernameSubject = new BehaviorSubject<string | null>(null);
+    username$ = this.usernameSubject.asObservable();
+    private jwtHelper = new JwtHelperService();
+
+    constructor(private http: HttpClient) {
+        const storedUsername = localStorage.getItem('username');
+        if (storedUsername) {
+            this.usernameSubject.next(storedUsername);
+        }
+     }
 
     login(credentials: any): Observable<any> {
         return this.http.post(`${this.apiUrl}/user/authenticate`, credentials);
@@ -33,5 +42,24 @@ export class AuthService {
 
     isLoggedIn(): boolean {
         return !!this.getToken();
+    }
+    setUsername(username: string): void {
+      this.usernameSubject.next(username);
+      localStorage.setItem('username', username);
+    }
+  
+    getUsername(): string | null {
+      return this.usernameSubject.value;
+    }
+    decodeTokenAndGetUsername(token: string): string | null {
+        try {
+            const decodedToken = this.jwtHelper.decodeToken(token);
+            // Aquí asumimos que el nombre de usuario está en decodedToken.sub
+            // Ajusta según la estructura de tu token
+            return decodedToken && decodedToken.sub || null;
+        } catch (error) {
+            console.error('Error decoding token:', error);
+            return null;
+        }
     }
 }

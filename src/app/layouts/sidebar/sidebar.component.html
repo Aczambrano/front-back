@@ -3,7 +3,9 @@
         <div class="sidebar__avatar" >
             <img src="assets/images/user-1.jpg" alt="">
         </div>
-        <h2>Markarn Doe</h2>
+        @if(username){
+            <h2>{{username}}</h2>
+        }
     </div>
     <nav>
         <button class="sidebar__toggle-btn" (click)="handleToggleSidebar()">☰

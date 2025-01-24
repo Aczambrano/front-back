@@ -1,5 +1,7 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, Output } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -7,24 +9,37 @@ import { Router } from '@angular/router';
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss'
 })
-export class SidebarComponent {
+export class SidebarComponent implements OnDestroy{
 
   @Output() toggleSidebar = new EventEmitter<void>();
 
   isSidebarCollapsed = false; // Nueva propiedad para controlar el estado del sidebar
+  username: string | null = null;
+  usernameSubscription: Subscription;
 
-  constructor( private router: Router) {}
+  constructor(private router: Router, private authService: AuthService) {
+    this.usernameSubscription = this.authService.username$.subscribe(username => {
+      console.log(username)
+      this.username = username
+    })
+  }
 
-  accounts(){
+  accounts() {
     this.router.navigate(['/dashboard/accounts']);
   }
-  
-  transactions(){
+
+  transactions() {
     this.router.navigate(['/dashboard/transactions']);
   }
-  
-  handleToggleSidebar(){
-      this.isSidebarCollapsed = !this.isSidebarCollapsed; // Cambia el estado del sidebar
-      this.toggleSidebar.emit(); // Emite el evento (si lo necesitas para otras partes de la app)
+
+  handleToggleSidebar() {
+    this.isSidebarCollapsed = !this.isSidebarCollapsed; // Cambia el estado del sidebar
+    this.toggleSidebar.emit(); // Emite el evento (si lo necesitas para otras partes de la app)
+  }
+
+  ngOnDestroy(): void {
+    if(this.usernameSubscription) {
+        this.usernameSubscription.unsubscribe()
+    }
   }
 }
