@@ -1,0 +1,89 @@
+.summary-card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    padding: 1.5rem;
+    width: 32%;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-color 0.3s ease;
+
+
+    &:hover {
+        background-color: #f5f5f5;
+
+    }
+
+    .summary-image {
+        img {
+            max-width: 6rem;
+            max-height: 6rem;
+            border-radius: 50%;
+        }
+    }
+
+    .summary-content {
+        display: flex;
+        flex-direction: column;
+
+        .summary-title {
+            font-size: 1.2rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        .summary-value {
+            font-size: 1.5rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+
+            .summary-percentage {
+                font-size: 1rem;
+                color: green;
+                font-weight: 500;
+            }
+        }
+
+        .summary-description {
+            color: #6b7280;
+            font-size: 0.8rem;
+        }
+
+        .summary-button {
+            background-color: #F2877D;
+            color: #ffffff;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            margin-top: 0.5rem;
+        }
+    }
+
+    .summary-icon {
+        font-size: 2rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
+        width: 2.5rem;
+        height: 2.5rem;
+    }
+
+    &:nth-child(2) {
+        .summary-icon {
+            color: #ffffff;
+            background-color: #03DAC6;
+        }
+    }
+
+    &:nth-child(3) {
+        .summary-icon {
+            color: #ffffff;
+            background-color: #F2877D;
+        }
+    }
+
+}

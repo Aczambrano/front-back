@@ -1,9 +1,9 @@
-.dashboard-summary {
+.summary {
     display: flex;
     margin-bottom: 1rem;
     justify-content: space-between;
 
-    .summary-card {
+    &__card {
         background-color: #fff;
         border-radius: 8px;
         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
@@ -14,59 +14,9 @@
         align-items: center;
         transition: background-color 0.3s ease;
 
-
         &:hover {
             background-color: #f5f5f5;
 
-        }
-
-        .summary-content {
-            display: flex;
-            flex-direction: column;
-
-            .summary-title {
-                font-size: 1.2rem;
-                font-weight: 500;
-                margin-bottom: 0.5rem;
-            }
-
-            .summary-value {
-                font-size: 1.5rem;
-                font-weight: 600;
-                display: flex;
-                align-items: center;
-                gap: 0.5rem;
-
-                .summary-percentage {
-                    font-size: 1rem;
-                    color: green;
-                    font-weight: 500;
-                }
-            }
-
-            .summary-description {
-                color: #6b7280;
-                font-size: 0.8rem;
-            }
-
-            .summary-button {
-                background-color: #F2877D;
-                color: #ffffff;
-                border: none;
-                padding: 0.5rem 1rem;
-                border-radius: 4px;
-                margin-top: 0.5rem;
-            }
-        }
-
-        .summary-icon {
-            font-size: 2rem;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border-radius: 50%;
-            width: 2.5rem;
-            height: 2.5rem;
         }
 
         &:nth-child(2) {
@@ -85,16 +35,87 @@
 
     }
 
-    .summary-image {
+    &__image {
         img {
             max-width: 6rem;
             max-height: 6rem;
             border-radius: 50%;
         }
     }
+
+    &__content {
+        display: flex;
+        flex-direction: column;
+
+
+    }
+
+    &__title {
+        font-size: 1.2rem;
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+    }
+
+    &__value {
+        font-size: 1.5rem;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+
+
+    &__percentage {
+        font-size: 1rem;
+        color: green;
+        font-weight: 500;
+    }
+
+    &__description {
+        color: #6b7280;
+        font-size: 0.8rem;
+    }
+
+    &__button {
+        background-color: #F2877D;
+        color: #ffffff;
+        border: none;
+        padding: 0.5rem 1rem;
+        border-radius: 4px;
+        margin-top: 0.5rem;
+    }
+
+    &__icon {
+        font-size: 2rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
+        width: 2.5rem;
+        height: 2.5rem;
+    }
+
+
+
 }
 
-.profile-card {
+
+.container-with-info {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.container-with-info>.card {
+    width: 50%;
+
+    &:nth-child(1) {
+        width: 102%;
+    }
+}
+
+.card {
     background-color: #fff;
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
@@ -105,110 +126,88 @@
     }
 
 
-    .profile-header {
+    &__name {
+        display: flex;
+        align-items: center;
+
+        h2 {
+            font-size: 1.125rem;
+            font-weight: 600;
+        }
+    }
+
+    &__header {
         display: flex;
         align-items: center;
         justify-content: space-between;
         padding: 1.5rem;
         border-bottom: 1px solid #e5e7eb;
 
-        .profile-image {
-            width: 3rem;
-            height: 3rem;
-            border-radius: 50%;
-            margin-right: 1rem;
-        }
+        
+    }
 
-        .profile-name {
-            display: flex;
-            align-items: center;
-            h2 {
-                font-size: 1.125rem;
-                font-weight: 600;
+
+    &__image {
+        width: 3rem;
+        height: 3rem;
+        border-radius: 50%;
+        margin-right: 1rem;
+    }
+
+
+    &__actions {
+        display: flex;
+        gap: 0.5rem;
+
+        button {
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            border: none;
+            background-color: #007bff;
+            color: white;
+            font-size: 0.9rem;
+            transition: background-color 0.2s;
+
+            &:hover {
+                background-color: #0056b3;
             }
         }
 
-        .profile-actions {
-            display: flex;
-            gap: 0.5rem;
+        .edit-button {
+            background-color: #28a745;
 
-            button {
-                padding: 0.5rem 1rem;
-                border-radius: 4px;
-                cursor: pointer;
-                border: none;
-                background-color: #007bff;
-                color: white;
-                font-size: 0.9rem;
-                transition: background-color 0.2s;
-
-                &:hover {
-                    background-color: #0056b3;
-                }
+            &:hover {
+                background-color: #1e7e34;
             }
+        }
 
-            .edit-button {
-                background-color: #28a745;
+        .transaction-button {
+            background-color: #007bff;
 
-                &:hover {
-                    background-color: #1e7e34;
-                }
-            }
-
-            .transaction-button {
-                background-color: #dc3545;
-
-                &:hover {
-                    background-color: #c82333;
-                }
+            &:hover {
+                background-color: #2376cf;
             }
         }
     }
 
-    .profile-details {
+    &__details {
         padding: 1.5rem;
 
-        .detail {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 0.75rem;
-
-            .detail-label {
-                color: #6b7280;
-            }
-
-            .detail-value {
-                font-weight: 500;
-            }
-        }
+        
     }
 
-    .profile-stats {
+    &__detail {
         display: flex;
-        border-top: 1px solid #e5e7eb;
+        justify-content: space-between;
+        margin-bottom: 0.75rem;
 
-        .stat {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 1rem 0;
+        &--label {
+            color: #6b7280;
+        }
 
-            &:not(:last-child) {
-                border-right: 1px solid #e5e7eb;
-            }
-
-            .stat-value {
-                font-size: 1.25rem;
-                font-weight: 600;
-                margin-bottom: 0.25rem;
-            }
-
-            .stat-label {
-                color: #6b7280;
-                font-size: 0.875rem;
-            }
+        &--value {
+            font-weight: 500;
         }
     }
 }
@@ -218,6 +217,12 @@
     flex-wrap: wrap;
     margin-top: 1rem;
     gap: 1rem;
+
+    &__item {
+        width: calc(33.33% - 0.7rem);
+    }
+/*
+
     .invoice-card {
         background-color: #fff;
         border-radius: 8px;
@@ -340,9 +345,8 @@
                 }
             }
         }
-    }
+    }*/
 }
-
 
 .pagination {
     display: flex;
@@ -367,15 +371,15 @@
 
 
 .modal-overlay {
-    position: fixed; 
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); 
+    background-color: rgba(0, 0, 0, 0.5);
     display: flex;
-    justify-content: center; 
-    align-items: center; 
+    justify-content: center;
+    align-items: center;
     z-index: 1000;
 }
 
@@ -386,7 +390,7 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     width: 80%;
     max-width: 600px;
-    position: relative; 
+    position: relative;
 }
 
 .modal-close-button {
@@ -405,19 +409,7 @@
     color: #333;
 }
 
-.container-with-info{
-    display: flex;
-    gap: 1rem;
-    margin-bottom: 1rem;
-    
 
-}
-.container-with-info > .profile-card{
-    width: 50%;
-    &:nth-child(1) {
-        width: 102%;
-    }
-}
 .info-card {
     width: 50%;
     background-color: #fff;

@@ -1,0 +1,25 @@
+<div class="summary-card">
+    <div class="summary-content">
+        <h3 class="summary-title">{{ title }}</h3>
+        <div class="summary-value">
+            @if (isNumber(value)) {
+            <span>${{value}}</span>
+            } @else {
+            <span>{{value}}</span>
+            }
+        </div>
+        <span class="summary-description">{{ description }}</span>
+    </div>
+
+    @if (imageType === 'image' && image) {
+    <div class="summary-image">
+        <img [src]="image" alt="Summary Image" />
+    </div>
+    }
+
+    @if (imageType === 'icon' && icon) {
+    <div class="summary-icon">
+        <img [src]="icon" alt="Summary Icon" />
+    </div>
+    }
+</div>

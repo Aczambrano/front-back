@@ -9,11 +9,14 @@ import { delay, of, Subscription, switchMap } from 'rxjs';
 import { LoaderComponent } from "../../../components/loader/loader.component";
 import { TransactionService } from '../../../services/transaction.service';
 import { DatePipe } from '@angular/common';
+import { TransactionType } from '../../../interfaces/transaction-type.enum';
+import { SumaryCardComponent } from "../../../components/sumary-card/sumary-card.component";
+import { TransactionCardComponent } from "../../../components/transaction-card/transaction-card.component";
 
 
 @Component({
   selector: 'app-account-detail',
-  imports: [TransactionModalComponent, AccountModalComponent, LoaderComponent, DatePipe], // Make sure TransactionFormComponent is imported here if it's in a separate module
+  imports: [TransactionModalComponent, AccountModalComponent, LoaderComponent, DatePipe, SumaryCardComponent, TransactionCardComponent],
   templateUrl: './account-detail.component.html',
   styleUrl: './account-detail.component.scss'
 })
@@ -36,7 +39,6 @@ export class AccountDetailComponent implements OnInit, OnDestroy {
     private router: Router,
     private accountService: AccountService,
     private transactionService: TransactionService) {
-
     this.transactionCreatedSubscription = this.transactionService.transactionCreatedSource$
       .pipe(
         switchMap(() => {
@@ -60,6 +62,7 @@ export class AccountDetailComponent implements OnInit, OnDestroy {
       });
   }
 
+  TransactionType = TransactionType;
 
   private refreshAccountAndTransactions(): void {
     this.loadAccountDetails();
