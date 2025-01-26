@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { SidebarComponent } from '../../layouts/sidebar/sidebar.component';
 import { NavComponent } from "../nav/nav.component";
-import { filter, map, mergeMap, of, tap } from 'rxjs';
 
 @Component({
   selector: 'app-dashboard',

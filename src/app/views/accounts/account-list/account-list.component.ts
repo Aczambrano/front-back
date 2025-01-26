@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { delay, of, Subscription, switchMap } from 'rxjs';
 import { AccountService } from '../../../services/account.service';
 import { AccountResponse } from '../../../interfaces/Account.interface';
-import { Route, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { LoaderComponent } from "../../../components/loader/loader.component";
 import { TableComponent } from "../../../components/table/table.component";
 import { ModalComponent } from "../../../components/modal/modal.component";

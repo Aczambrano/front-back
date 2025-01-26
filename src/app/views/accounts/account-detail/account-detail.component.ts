@@ -45,6 +45,7 @@ export class AccountDetailComponent implements OnInit, OnDestroy {
     { label: TransactionType.ATM_WITHDRAWAL, value: ' (1$)' },
   ];
 
+
   constructor(private route: ActivatedRoute,
     private router: Router,
     private accountService: AccountService,
@@ -70,6 +71,7 @@ export class AccountDetailComponent implements OnInit, OnDestroy {
       .subscribe(() => {
         this.refreshAccountAndTransactions();
       });
+
   }
 
   TransactionType = TransactionType;

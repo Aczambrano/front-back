@@ -1,30 +1,44 @@
-<aside class="sidebar" [class.sidebar--collapsed]="isSidebarCollapsed">
+<aside class="sidebar" [class.sidebar--collapsed]="isSidebarCollapsed" aria-label="Main Navigation">
     <div class="sidebar__user-profile">
-        <div class="sidebar__avatar" >
-            <img src="assets/images/user-1.jpg" alt="User Avatar">
+        <div class="sidebar__avatar">
+            <img src="assets/images/user-1.jpg" alt="User Avatar" />
         </div>
-        @if(username){
-            <h2>{{username}}</h2>
+        @if (username) {
+            <h2>{{ username }}</h2>
         }
     </div>
-    <nav>
-        <button class="sidebar__toggle-btn" (click)="handleToggleSidebar()"
-        aria-label="Sidebar Toggle"
-        >☰
-            <span>Hidden</span>
+    <nav aria-label="Secondary Navigation">
+        <button
+            class="sidebar__toggle-btn"
+            (click)="handleToggleSidebar()"
+            aria-label="Toggle sidebar navigation"
+            [attr.aria-expanded]="!isSidebarCollapsed"
+        >
+            ☰
+             <span class="sr-only">Toggle Sidebar</span>
         </button>
-        
-        <a (click)="accounts()" routerLinkActive="active">
+
+        <a
+            (click)="accounts()"
+            routerLinkActive="active"
+            routerLink="/accounts"
+            aria-label="Go to accounts list"
+            tabindex="0"
+        >
             <i class="sidebar__icon">
-                    <img src="assets/images/account_balance.svg" alt="bank account icon" aria-hidden="true">
+                <img src="assets/images/account_balance.svg" alt="bank account icon" aria-hidden="true" />
             </i>
             <span>Accounts</span>
         </a>
-        <a (click)="transactions()" routerLinkActive="active"
-        aria-label="Go to account list"
+        <a
+            (click)="transactions()"
+            routerLinkActive="active"
+            routerLink="/transactions"
+            aria-label="Go to transaction list"
+             tabindex="0"
         >
             <i class="sidebar__icon">
-                    <img src="assets/images/transaction.svg" alt="transaction icon" aria-hidden="true">
+                <img src="assets/images/transaction.svg" alt="transaction icon" aria-hidden="true" />
             </i>
             <span>Transactions</span>
         </a>
