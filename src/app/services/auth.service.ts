@@ -51,6 +51,8 @@ export class AuthService {
     getUsername(): string | null {
       return this.usernameSubject.value;
     }
+
+
     decodeTokenAndGetUsername(token: string): string | null {
         try {
             const decodedToken = this.jwtHelper.decodeToken(token);
@@ -60,4 +62,17 @@ export class AuthService {
             return null;
         }
     }
+    decodeTokenAndGetRoles(token: string): string[] {
+      try {
+          const decodedToken = this.jwtHelper.decodeToken(token);
+          if (decodedToken && decodedToken.roles) {
+              const rolesArray = Array.isArray(decodedToken.roles) ? decodedToken.roles : [decodedToken.roles];
+              return rolesArray.map((role: string) => `ROLE_${role}`);
+          }
+          return [];
+      } catch (error) {
+          console.error('Error decoding token:', error);
+          return [];
+      }
+  }
 }

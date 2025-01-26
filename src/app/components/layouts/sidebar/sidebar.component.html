@@ -18,29 +18,34 @@
              <span class="sr-only">Toggle Sidebar</span>
         </button>
 
-        <a
+        @if (isUser() || isAdmin()) {
+          <a
             (click)="accounts()"
             routerLinkActive="active"
-            routerLink="/accounts"
+            routerLink="/dashboard/accounts"
             aria-label="Go to accounts list"
             tabindex="0"
-        >
-            <i class="sidebar__icon">
-                <img src="assets/images/account_balance.svg" alt="bank account icon" aria-hidden="true" />
-            </i>
-            <span>Accounts</span>
-        </a>
-        <a
-            (click)="transactions()"
-            routerLinkActive="active"
-            routerLink="/transactions"
-            aria-label="Go to transaction list"
-             tabindex="0"
-        >
-            <i class="sidebar__icon">
-                <img src="assets/images/transaction.svg" alt="transaction icon" aria-hidden="true" />
-            </i>
-            <span>Transactions</span>
-        </a>
+          >
+              <i class="sidebar__icon">
+                  <img src="assets/images/account_balance.svg" alt="bank account icon" aria-hidden="true" />
+              </i>
+              <span>Accounts</span>
+          </a>
+        }
+
+        @if (isAdmin()) {
+            <a
+                (click)="transactions()"
+                routerLinkActive="active"
+                routerLink="/dashboard/transactions"
+                aria-label="Go to transaction list"
+                tabindex="0"
+            >
+                <i class="sidebar__icon">
+                    <img src="assets/images/transaction.svg" alt="transaction icon" aria-hidden="true" />
+                </i>
+                <span>Transactions</span>
+            </a>
+        }
     </nav>
 </aside>

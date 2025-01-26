@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnDestroy, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../../../services/auth.service';
@@ -12,6 +12,7 @@ import { AuthService } from '../../../services/auth.service';
 export class SidebarComponent implements OnDestroy{
 
   @Output() toggleSidebar = new EventEmitter<void>();
+  @Input() userRoles: string[] = [];
 
   isSidebarCollapsed = false; 
   username: string | null = null;
@@ -21,7 +22,9 @@ export class SidebarComponent implements OnDestroy{
     this.usernameSubscription = this.authService.username$.subscribe(username => {
       this.username = username
     })
+
   }
+
 
   accounts() {
     this.router.navigate(['/dashboard/accounts']);
@@ -40,5 +43,12 @@ export class SidebarComponent implements OnDestroy{
     if(this.usernameSubscription) {
         this.usernameSubscription.unsubscribe()
     }
+  }
+
+  isAdmin(): boolean {
+    return this.userRoles.includes('ROLE_ADMIN');
+  }
+  isUser(): boolean {
+    return this.userRoles.includes('ROLE_USER');
   }
 }
