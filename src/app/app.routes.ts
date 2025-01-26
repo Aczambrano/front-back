@@ -1,12 +1,12 @@
 import { Routes } from '@angular/router';
 
 import { authGuard } from './guards/auth.guard';
-import { LoginComponent } from './views/auth/login/login.component';
-import { RegisterComponent } from './views/auth/register/register.component';
-import { AccountListComponent } from './views/accounts/account-list/account-list.component';
-import { TransactionListComponent } from './views/transactions/transaction-list/transaction-list.component';
-import { DashboardComponent } from './layouts/dashboard/dashboard.component';
-import { AccountDetailComponent } from './views/accounts/account-detail/account-detail.component';
+import { LoginComponent } from './components/views/auth/login/login.component';
+import { RegisterComponent } from './components/views/auth/register/register.component';
+import { DashboardComponent } from './components/layouts/dashboard/dashboard.component';
+import { AccountListComponent } from './components/views/accounts/account-list/account-list.component';
+import { AccountDetailComponent } from './components/views/accounts/account-detail/account-detail.component';
+import { TransactionListComponent } from './components/views/transactions/transaction-list/transaction-list.component';
 
 export const routes: Routes = [
     { path: 'login', component: LoginComponent },
