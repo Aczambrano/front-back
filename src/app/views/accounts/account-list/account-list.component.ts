@@ -57,7 +57,6 @@ export class AccountListComponent implements OnInit {
     });
   }
 
-
   showDetails(accountNumber: string) {
     this.selectedAccount = accountNumber;
     this.router.navigate(['/dashboard/account-detail'], { queryParams: { accountNumber: accountNumber } });

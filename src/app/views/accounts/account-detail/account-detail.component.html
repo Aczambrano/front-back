@@ -1,144 +1,64 @@
 <!-- Tu componente principal .html -->
 
 @if (showLoader) {
-    <app-loader></app-loader>
+<app-loader></app-loader>
+}
+@if (account) {
+<div class="summary">
+    <app-sumary-card class="summary__card" [title]="'owner'" [value]="account.owner"
+        [description]="'Acc. number: ' + account.accountNumber" imageType="image"
+        image="assets/images/user-1.jpg"></app-sumary-card>
+
+    <app-sumary-card class="summary__card" title="Current Balance" [value]="account.balance"
+        [description]="account.status" imageType="icon" icon="assets/images/cash.svg"></app-sumary-card>
+
+    <app-sumary-card class="summary__card" title="Transactions" [value]="transactions.length"
+        description="#Transactions" imageType="icon" icon="assets/images/view_transaction.svg"></app-sumary-card>
+</div>
+<div class="container-with-info">
+    <app-account-info class="card" [title]="account.owner" [image]="'assets/images/user-1.jpg'" imageType="image"
+        [actions]="[{label: 'Edit Account', handler: openEditModal.bind(this)}, {label:'Create Transaction', handler: openTransactionForm.bind(this)}]"
+        [details]="[
+            { label: 'Account Number', value: account.accountNumber },
+            { label: 'Balance', value: '$'+account.balance },
+            { label: 'Status', value: account.status }
+           ]"></app-account-info>
+    <app-account-info class="card" [title]="'Transaction Costs'" [details]="[
+             { label: 'Depósito desde sucursal', value: '0$' },
+              { label: 'Depósito desde cajero automático', value: '1$' },
+             { label: 'Depósito desde otra cuenta', value: '1.5$' },
+              { label: 'Compra en establecimiento físico', value: '0$' },
+            { label: 'Compra con tarjeta en página web', value: '5$' },
+             { label: 'Retiro en cajero automático', value: '1$' }
+          ]" [showActions]="false"></app-account-info>
+</div>
+
+<div class="invoice-container">
+    @for (transaction of displayedTransactions; track transaction.transactionId; let i = $index) {
+    <app-transaction-card class="invoice-container__item" [transaction]="transaction"
+        [accountNumber]="account.accountNumber"
+        [transactionNumber]="(currentPage - 1) * itemsPerPage + i + 1"></app-transaction-card>
     }
-    @if (account) {
-    <div class="summary">
-        <div class="summary__card">
-            <div class="summary__content">
-                <h3 class="summary__title">
-                    <div class="summary__value">
-                        <span>{{account.owner}}</span>
-                    </div>
-                </h3>
-                <span class="summary__description"> Acc. number: {{account.accountNumber}}</span>
-            </div>
-            <div class="summary__image">
-                <img src="assets/images/user-1.jpg" alt="Julia Illustration" />
-            </div>
-        </div>
-        <div class="summary__card">
-            <div class="summary__content">
-                <h3 class="summary__title">Current Balance</h3>
-                <div class="summary__value">
-                    <span>${{account.balance}}</span>
-                </div>
-                <div class="summary__description">
-                    {{account.status}}
-                </div>
-            </div>
-            <div class="summary__icon">
-                <img src="assets/images/cash.svg" alt="cash icon" />
-            </div>
-        </div>
-        <div class="summary__card">
-            <div class="summary__content">
-                <h3 class="summary__title">Transactions</h3>
-                <div class="summary__value">
-                    <span>{{transactions.length}}</span>
-                </div>
-                <span class="summary__description">#Transactions</span>
-            </div>
-            <div class="summary__icon">
-                <img src="assets/images/view_transaction.svg" alt="view transaction icon" />
-            </div>
-        </div>
-    </div>
-    <div class="container-with-info">
-        <div class="card">
-            <div class="card__header">
-                <div class="card__name">
-                    <img src="assets/images/user-1.jpg" alt="Profile Picture" class="card__image">
-                    <h2>{{account.owner}}</h2>
-                </div>
-                <div class="card__actions">
-                    <button class="edit-button" (click)="openEditModal()">Edit Account</button>
-                    <button class="transaction-button" (click)="openTransactionForm()">Create Transaction</button>
-                </div>
-            </div>
-            <div class="card__details">
-                <div class="card__detail">
-                    <span class="card__detail--label">Account Number:</span>
-                    <span class="card__detail--value">{{ account.accountNumber }}</span>
-                </div>
-                <div class="card__detail">
-                    <span class="card__detail--label">Balance:</span>
-                    <span class="card__detail--value">${{ account.balance }}</span>
-                </div>
-                <div class="card__detail">
-                    <span class="card__detail--label">Status:</span>
-                    <span class="card__detail--value">{{ account.status }}</span>
-                </div>
-            </div>
-    
-        </div>
-        <div class="card">
-            <div class="card__header">
-                <div class="card__name">
-    
-                    <h2>Transaction Costs</h2>
-                </div>
-            </div>
-            <div class="card__details">
-                <div class="card__detail">
-                    <span class="card__detail--label">Depósito desde sucursal:</span>
-                    <span class="card__detail--value">0$.</span>
-                </div>
-                <div class="card__detail">
-                    <span class="card__detail--label">Depósito desde cajero automático:</span>
-                    <span class="card__detail--value">1$</span>
-                </div>
-                <div class="card__detail">
-                    <span class="card__detail--label">Depósito desde otra cuenta::</span>
-                    <span class="card__detail--value">1.5$</span>
-                </div>
-                <div class="card__detail">
-                    <span class="card__detail--label">Compra en establecimiento físico:</span>
-                    <span class="card__detail--value">0$</span>
-                </div>
-                <div class="card__detail">
-                    <span class="card__detail--label">Compra con tarjeta en página web:</span>
-                    <span class="card__detail--value">5$</span>
-                </div>
-                <div class="card__detail">
-                    <span class="card__detail--label">Retiro en cajero automático:</span>
-                    <span class="card__detail--value">1$</span>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    
-    
-    <div class="invoice-container">
-      @for (transaction of displayedTransactions; track transaction.transactionId; let i = $index) {
-        <app-transaction-card class="invoice-container__item"
-          [transaction]="transaction"
-          [accountNumber]="account.accountNumber"
-           [transactionNumber]="(currentPage - 1) * itemsPerPage + i + 1"
-        ></app-transaction-card>
-      }
-    </div>
-    @if(transactions && transactions.length > itemsPerPage) {
-    <div class="pagination">
-        <button (click)="previousPage()" [disabled]="currentPage === 1">Previous</button>
-        <span>Page {{ currentPage }} of {{ totalPages }}</span>
-        <button (click)="nextPage()" [disabled]="currentPage === totalPages">Next</button>
-    </div>
-    }
-    
-    } @else {
-    <div class="profile-card">
-        <p>No se encontraron detalles de la cuenta</p>
-    </div>
-    }
-    
-    @if (showEditModal) {
-    <app-account-modal [accountNumber]="accountNumber" (close)="closeEditModal()"></app-account-modal>
-    }
-    
-    @if (showTransactionForm) {
-    <app-transaction-modal [balance]="balance" [accountNumber]="accountNumber"
-        (close)="closeTransactionForm()"></app-transaction-modal>
-    }
+</div>
+@if(transactions && transactions.length > itemsPerPage) {
+<div class="pagination">
+    <button (click)="previousPage()" [disabled]="currentPage === 1">Previous</button>
+    <span>Page {{ currentPage }} of {{ totalPages }}</span>
+    <button (click)="nextPage()" [disabled]="currentPage === totalPages">Next</button>
+</div>
+}
+
+} @else {
+<div class="profile-card">
+    <p>No se encontraron detalles de la cuenta</p>
+</div>
+}
+
+@if (showEditModal) {
+<app-account-modal [accountNumber]="accountNumber" (close)="closeEditModal()"></app-account-modal>
+}
+
+@if (showTransactionForm) {
+<app-transaction-modal [balance]="balance" [accountNumber]="accountNumber"
+    (close)="closeTransactionForm()"></app-transaction-modal>
+}

@@ -1,0 +1,29 @@
+<div class="card" [class]="customClass">
+    <div class="card__header">
+      <div class="card__name">
+        @if (imageType === 'image' && image) {
+        <img [src]="image" alt="Card Image" class="card__image">
+        }
+         @if (imageType === 'icon' && icon) {
+          <img [src]="icon" alt="Card Icon" class="card__image" style="width:2rem; height:2rem" >
+          }
+        <h2>{{ title }}</h2>
+      </div>
+      @if (showActions) {
+      <div class="card__actions">
+        @for (action of actions; track action; let i = $index) {
+        <button (click)="onActionClick(action.handler)" class="{{action.label.toLowerCase().replace(' ','-')}}-button">{{action.label}}</button>
+          }
+        </div>
+        }
+    </div>
+    <div class="card__details">
+      @for (detail of details; track detail; let i = $index) {
+        <div class="card__detail">
+          <span class="card__detail--label">{{ detail.label }}:</span>
+          <span class="card__detail--value">{{ detail.value }}</span>
+        </div>
+       }
+      
+    </div>
+  </div>

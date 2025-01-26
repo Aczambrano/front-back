@@ -12,11 +12,12 @@ import { DatePipe } from '@angular/common';
 import { TransactionType } from '../../../interfaces/transaction-type.enum';
 import { SumaryCardComponent } from "../../../components/sumary-card/sumary-card.component";
 import { TransactionCardComponent } from "../../../components/transaction-card/transaction-card.component";
+import { AccountInfoComponent } from "../../../components/account-info/account-info.component";
 
 
 @Component({
   selector: 'app-account-detail',
-  imports: [TransactionModalComponent, AccountModalComponent, LoaderComponent, DatePipe, SumaryCardComponent, TransactionCardComponent],
+  imports: [TransactionModalComponent, AccountModalComponent, LoaderComponent, DatePipe, SumaryCardComponent, TransactionCardComponent, AccountInfoComponent],
   templateUrl: './account-detail.component.html',
   styleUrl: './account-detail.component.scss'
 })
