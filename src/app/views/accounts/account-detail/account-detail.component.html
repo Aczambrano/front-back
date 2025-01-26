@@ -55,10 +55,10 @@
 }
 
 @if (showEditModal) {
-<app-account-modal [accountNumber]="accountNumber" (close)="closeEditModal()"></app-account-modal>
+<app-modal  [accountNumber]="accountNumber" (close)="closeEditModal()"></app-modal >
 }
 
 @if (showTransactionForm) {
-<app-transaction-modal [balance]="balance" [accountNumber]="accountNumber"
-    (close)="closeTransactionForm()"></app-transaction-modal>
+<app-modal  [balance]="balance" [accountNumber]="accountNumber"
+    (close)="closeTransactionForm()"></app-modal >
 }

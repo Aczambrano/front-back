@@ -2,12 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService } from '../../../services/auth.service'; // Importa el servicio AuthService
+import { AuthService } from '../../../services/auth.service';
+import { AuthFormComponent } from "../../../components/auth-form/auth-form.component"; // Importa el servicio AuthService
 
 @Component({
     selector: 'app-register',
     standalone: true,
-    imports: [ReactiveFormsModule, CommonModule],
+    imports: [ReactiveFormsModule, CommonModule, AuthFormComponent],
     templateUrl: './register.component.html',
     styleUrl: './register.component.scss'
 })

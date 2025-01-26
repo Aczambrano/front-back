@@ -1,8 +1,22 @@
 @if (showLoader) {
-    <app-loader></app-loader>
-    }
+<app-loader></app-loader>
+}
 
 <div class="account-list-container">
+    <h2>Lista de Cuentas Bancarias</h2>
+    <div class="account-list-actions">
+        <button class="account-list-button" (click)="openCreateModal()">Crear Cuenta</button>
+    </div>
+    <app-table [headers]="['accountNumber', 'owner', 'balance']" [data]="accounts"
+        [actions]="[{label: 'Ver Detalles', handler: showDetails.bind(this)}]">
+
+    </app-table>
+    @if(showModal) {
+    <app-modal [accountNumber]="selectedAccount" (close)="closeModal()"></app-modal>
+    }
+</div>
+
+<!-- <div class="account-list-container">
     <h2>Lista de Cuentas Bancarias</h2>
     <div class="account-list-actions">
         <button class="account-list-button" (click)="openCreateModal()">Crear Cuenta</button>
@@ -34,4 +48,4 @@
    @if(showModal) {
       <app-account-modal [accountNumber]="selectedAccount" (close)="closeModal()"></app-account-modal>
    }
-</div>
+</div> -->

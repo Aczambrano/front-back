@@ -3,8 +3,6 @@ import { AccountResponse } from '../../../interfaces/Account.interface';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AccountService } from '../../../services/account.service';
 import { TransactionResponse } from '../../../interfaces/transaction.interface';
-import { TransactionModalComponent } from "../../modals/transaction-modal/transaction-modal.component";
-import { AccountModalComponent } from "../../modals/account-modal/account-modal.component";
 import { delay, of, Subscription, switchMap } from 'rxjs';
 import { LoaderComponent } from "../../../components/loader/loader.component";
 import { TransactionService } from '../../../services/transaction.service';
@@ -13,11 +11,12 @@ import { TransactionType } from '../../../interfaces/transaction-type.enum';
 import { SumaryCardComponent } from "../../../components/sumary-card/sumary-card.component";
 import { TransactionCardComponent } from "../../../components/transaction-card/transaction-card.component";
 import { AccountInfoComponent } from "../../../components/account-info/account-info.component";
+import { ModalComponent } from "../../../components/modal/modal.component";
 
 
 @Component({
   selector: 'app-account-detail',
-  imports: [TransactionModalComponent, AccountModalComponent, LoaderComponent, DatePipe, SumaryCardComponent, TransactionCardComponent, AccountInfoComponent],
+  imports: [LoaderComponent, DatePipe, SumaryCardComponent, TransactionCardComponent, AccountInfoComponent, ModalComponent],
   templateUrl: './account-detail.component.html',
   styleUrl: './account-detail.component.scss'
 })

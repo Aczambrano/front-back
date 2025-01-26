@@ -1,9 +1,10 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { TransactionFormComponent } from "../../transactions/transaction-form/transaction-form.component";
+import { AccountFormComponent } from "../../accounts/account-form/account-form.component";
 
 @Component({
   selector: 'app-transaction-modal',
-  imports: [TransactionFormComponent],
+  imports: [TransactionFormComponent, AccountFormComponent],
   templateUrl: './transaction-modal.component.html',
   styleUrl: './transaction-modal.component.scss'
 })

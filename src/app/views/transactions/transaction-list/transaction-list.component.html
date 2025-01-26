@@ -6,29 +6,5 @@
           <button class="transaction-list-button" (click)="searchByAccountNumber()">Buscar</button>
     </div>
 
-    @if(transactions.length > 0) {
-    <table class="transaction-list-table">
-        <thead>
-            <tr>
-                <th>Tipo</th>
-                <th>Monto</th>
-                <th>Costo</th>
-                 <th>Fecha</th>
-            </tr>
-        </thead>
-        <tbody>
-            @for (transaction of transactions; track transaction.transactionType) {
-                <tr>
-                    <td>{{ transaction.transactionType }}</td>
-                    
-                    <td>{{ transaction.amount }}</td>
-                    <td>{{ transaction.transactionCost }}</td>
-                     <td>{{ transaction.date | date:'medium' }}</td>
-                </tr>
-            }
-        </tbody>
-    </table>
-    } @else {
-     <p>No hay transacciones para mostrar</p>
-     }
+   <app-table [headers]="['transactionType', 'amount','transactionCost', 'date']" [data]="transactions" noDataMessage="No hay transacciones para mostrar"></app-table>
 </div>

@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { DatePipe } from '@angular/common';
-import { TransactionModalComponent } from "../../modals/transaction-modal/transaction-modal.component";
 import { TransactionService } from '../../../services/transaction.service';
 import { TransactionResponse } from '../../../interfaces/transaction.interface';
+import { TableComponent } from "../../../components/table/table.component";
 
 @Component({
   selector: 'app-transaction-list',
-  imports: [FormsModule, DatePipe, TransactionModalComponent],
+  imports: [FormsModule, DatePipe,TableComponent],
   templateUrl: './transaction-list.component.html',
   styleUrl: './transaction-list.component.scss'
 })

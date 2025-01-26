@@ -1,14 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { AccountModalComponent } from "../../modals/account-modal/account-modal.component";
 import { delay, of, Subscription, switchMap } from 'rxjs';
 import { AccountService } from '../../../services/account.service';
 import { AccountResponse } from '../../../interfaces/Account.interface';
 import { Route, Router } from '@angular/router';
 import { LoaderComponent } from "../../../components/loader/loader.component";
+import { TableComponent } from "../../../components/table/table.component";
+import { ModalComponent } from "../../../components/modal/modal.component";
 
 @Component({
   selector: 'app-account-list',
-  imports: [AccountModalComponent, LoaderComponent],
+  imports: [LoaderComponent, TableComponent,ModalComponent],
   templateUrl: './account-list.component.html',
   styleUrl: './account-list.component.scss'
 })
@@ -57,9 +58,9 @@ export class AccountListComponent implements OnInit {
     });
   }
 
-  showDetails(accountNumber: string) {
-    this.selectedAccount = accountNumber;
-    this.router.navigate(['/dashboard/account-detail'], { queryParams: { accountNumber: accountNumber } });
+  showDetails(account: AccountResponse) {
+    this.selectedAccount = account.accountNumber;
+    this.router.navigate(['/dashboard/account-detail'], { queryParams: { accountNumber: account.accountNumber } });
   }
 
   openCreateModal() {
