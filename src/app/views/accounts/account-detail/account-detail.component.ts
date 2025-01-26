@@ -2,11 +2,10 @@ import { Component, Input, OnDestroy, OnInit, Pipe } from '@angular/core';
 import { AccountResponse } from '../../../interfaces/Account.interface';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AccountService } from '../../../services/account.service';
-import { TransactionResponse } from '../../../interfaces/transaction.interface';
+import { TransactionResponse } from '../../../interfaces/Transaction.interface';
 import { delay, of, Subscription, switchMap } from 'rxjs';
 import { LoaderComponent } from "../../../components/loader/loader.component";
 import { TransactionService } from '../../../services/transaction.service';
-import { DatePipe } from '@angular/common';
 import { TransactionType } from '../../../interfaces/transaction-type.enum';
 import { SumaryCardComponent } from "../../../components/sumary-card/sumary-card.component";
 import { TransactionCardComponent } from "../../../components/transaction-card/transaction-card.component";
@@ -16,7 +15,7 @@ import { ModalComponent } from "../../../components/modal/modal.component";
 
 @Component({
   selector: 'app-account-detail',
-  imports: [LoaderComponent, DatePipe, SumaryCardComponent, TransactionCardComponent, AccountInfoComponent, ModalComponent],
+  imports: [LoaderComponent, SumaryCardComponent, TransactionCardComponent, AccountInfoComponent, ModalComponent],
   templateUrl: './account-detail.component.html',
   styleUrl: './account-detail.component.scss'
 })
@@ -34,6 +33,17 @@ export class AccountDetailComponent implements OnInit, OnDestroy {
   showLoader: boolean = false;
   private accountUpdatedSubscription?: Subscription;
   private transactionCreatedSubscription?: Subscription;
+
+
+
+  transactionOptions = [
+    { label: TransactionType.BRANCH_DEPOSIT, value:'(0$)' },
+    { label: TransactionType.ATM_DEPOSIT, value: ' (2$)' },
+    { label: TransactionType.OTHER_ACCOUNT_DEPOSIT, value: ' (1.5$)' },
+    { label: TransactionType.PHYSICAL_PURCHASE, value: ' (0$)' },
+    { label: TransactionType.ONLINE_PURCHASE, value: ' (5$)' },
+    { label: TransactionType.ATM_WITHDRAWAL, value: ' (1$)' },
+  ];
 
   constructor(private route: ActivatedRoute,
     private router: Router,

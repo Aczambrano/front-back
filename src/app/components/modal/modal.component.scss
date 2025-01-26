@@ -8,16 +8,17 @@
     display: flex;
     justify-content: center;
     align-items: center;
-}
-
-.modal-content {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-     width: 500px;
-    position: relative;
-
-    .close {
+    
+    &__content {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+         width: 500px;
+        position: relative;
+    
+    }
+    
+    &__close {
         position: absolute;
         right: 10px;
         top: 5px;
@@ -25,3 +26,4 @@
         cursor: pointer;
     }
 }
+

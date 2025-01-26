@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient,  } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { AccountRequest, AccountResponse } from '../interfaces/Account.interface';
@@ -9,7 +9,7 @@ import { AuthService } from './auth.service';
 })
 export class AccountService {
 
-  private apiUrl = 'http://localhost:8080/api/v1';  // Reemplaza con tu URL de backend
+  private apiUrl = 'http://localhost:8080/api/v1'; 
 
   private accountUpdatedSource = new Subject<AccountResponse[]>();
 
@@ -18,28 +18,20 @@ export class AccountService {
 
   constructor(private http: HttpClient, private authService: AuthService) { }
 
-
-  private getHeaders(): HttpHeaders {
-    const token = this.authService.getToken();
-    return new HttpHeaders({
-      'Authorization': `Bearer ${token}`
-    });
-  }
-
   createAccount(accountData: AccountRequest): Observable<AccountResponse> {
-    return this.http.post<AccountResponse>(`${this.apiUrl}/accounts/create`, accountData, { headers: this.getHeaders() });
+    return this.http.post<AccountResponse>(`${this.apiUrl}/accounts/create`, accountData);
   }
 
   getAccount(accountNumber: string): Observable<AccountResponse> {
-    return this.http.post<AccountResponse>(`${this.apiUrl}/accounts/accountNumber`, { accountNumber }, { headers: this.getHeaders() });
+    return this.http.post<AccountResponse>(`${this.apiUrl}/accounts/accountNumber`, { accountNumber });
   }
 
   getAllAccounts(): Observable<AccountResponse[]> {
-    return this.http.get<AccountResponse[]>(`${this.apiUrl}/accounts/getAll`, { headers: this.getHeaders() });
+    return this.http.get<AccountResponse[]>(`${this.apiUrl}/accounts/getAll`);
   }
 
   updateAccount(accountData: AccountRequest): Observable<AccountResponse> {
-    return this.http.post<AccountResponse>(`${this.apiUrl}/accounts/update`, accountData, { headers: this.getHeaders() });
+    return this.http.post<AccountResponse>(`${this.apiUrl}/accounts/update`, accountData);
   }
 
   notifyAccountUpdated(): void {

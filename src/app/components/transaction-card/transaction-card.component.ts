@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { TransactionType } from '../../interfaces/transaction-type.enum';
-import { TransactionResponse } from '../../interfaces/transaction.interface';
+import { TransactionResponse } from '../../interfaces/Transaction.interface';
 import { DatePipe } from '@angular/common';
 
 @Component({

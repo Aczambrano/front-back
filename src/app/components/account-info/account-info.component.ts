@@ -15,7 +15,8 @@ export class AccountInfoComponent {
   @Input() actions: { label: string, handler: () => void }[] = [];
   @Input() customClass: string = '';
   @Input() showActions: boolean = true;
-  
+  @Input() imageAlt : string = '';
+
   @Output() editClicked = new EventEmitter<void>();
   @Output() transactionClicked = new EventEmitter<void>();
 

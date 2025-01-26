@@ -1,4 +1,4 @@
-.summary-card {
+.summary {
     background-color: #fff;
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
@@ -14,7 +14,7 @@
 
     }
 
-    .summary-image {
+    &__image {
         img {
             max-width: 6rem;
             max-height: 6rem;
@@ -22,46 +22,49 @@
         }
     }
 
-    .summary-content {
+    &__content {
         display: flex;
         flex-direction: column;
 
-        .summary-title {
-            font-size: 1.2rem;
-            font-weight: 500;
-            margin-bottom: 0.5rem;
-        }
-
-        .summary-value {
-            font-size: 1.5rem;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-
-            .summary-percentage {
-                font-size: 1rem;
-                color: green;
-                font-weight: 500;
-            }
-        }
-
-        .summary-description {
-            color: #6b7280;
-            font-size: 0.8rem;
-        }
-
-        .summary-button {
-            background-color: #F2877D;
-            color: #ffffff;
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 4px;
-            margin-top: 0.5rem;
-        }
+        
     }
 
-    .summary-icon {
+    &__title {
+        font-size: 1.2rem;
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+    }
+
+    &__value {
+        font-size: 1.5rem;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+
+       
+    }
+
+    &__percentage {
+        font-size: 1rem;
+        color: green;
+        font-weight: 500;
+    }
+    
+    &__description {
+        color: #6b7280;
+        font-size: 0.8rem;
+    }
+
+    &__button {
+        background-color: #F2877D;
+        color: #ffffff;
+        border: none;
+        padding: 0.5rem 1rem;
+        border-radius: 4px;
+        margin-top: 0.5rem;
+    }
+    &__icon {
         font-size: 2rem;
         display: flex;
         justify-content: center;

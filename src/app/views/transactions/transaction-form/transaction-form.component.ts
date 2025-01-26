@@ -1,22 +1,26 @@
-import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { Component, EventEmitter, Input, Output, OnChanges, SimpleChanges } from '@angular/core';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { TransactionService } from '../../../services/transaction.service';
-import { TransactionRequest } from '../../../interfaces/transaction.interface';
+import { TransactionRequest } from '../../../interfaces/Transaction.interface';
 import { TransactionType } from '../../../interfaces/transaction-type.enum';
 
 @Component({
   selector: 'app-transaction-form',
-  imports: [FormsModule],
   templateUrl: './transaction-form.component.html',
-  styleUrl: './transaction-form.component.scss'
+  styleUrls: ['./transaction-form.component.scss'],
+  standalone: true,
+  imports: [ReactiveFormsModule]
 })
-export class TransactionFormComponent {
+export class TransactionFormComponent implements OnChanges {
   @Input() accountNumber: string | null = null;
   @Input() balance: number | null = null;
   @Output() close = new EventEmitter<void>();
-  errorMessage: string | null = null;
 
-  selectedType = TransactionType.ATM_DEPOSIT;
+  transactionForm: FormGroup;
+  errorMessage: string | null = null;
+  showConfirmationDialog = false;
+  transactionCost = 0;
+
   transactionOptions = [
     { value: TransactionType.BRANCH_DEPOSIT, label: 'Depósito en Sucursal (0$)' },
     { value: TransactionType.ATM_DEPOSIT, label: 'Depósito en Cajero Automático (2$)' },
@@ -24,47 +28,36 @@ export class TransactionFormComponent {
     { value: TransactionType.PHYSICAL_PURCHASE, label: 'Compra Física (0$)' },
     { value: TransactionType.ONLINE_PURCHASE, label: 'Compra en Línea (5$)' },
     { value: TransactionType.ATM_WITHDRAWAL, label: 'Retiro en Cajero Automático (1$)' },
-
   ];
 
-
-  transactionData: TransactionRequest = {
-    accountNumber: '',
-    amount: 0,
-    transactionType: ''
-  };
-
-
-  transactionCost: number = 0;
-
-  showConfirmationDialog: boolean = false;
-
-  constructor(private transactionService: TransactionService) {
+  constructor(
+    private fb: FormBuilder, 
+    private transactionService: TransactionService
+  ) {
+    this.transactionForm = this.fb.group({
+      accountNumber: [{value: '', disabled: true}, Validators.required],
+      amount: [0, [Validators.required, Validators.min(0)]],
+      transactionType: ['', Validators.required]
+    });
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-
-    if (changes['accountNumber']) {
-      if (this.accountNumber) {
-        this.transactionData = {
-          accountNumber: this.accountNumber,
-          amount: 0,
-          transactionType: ''
-        };
-        this.errorMessage = null;
-      }
+    if (changes['accountNumber'] && this.accountNumber) {
+      this.transactionForm.patchValue({
+        accountNumber: this.accountNumber
+      });
+      this.errorMessage = null;
     }
 
-    if (changes['balance'] && this.balance != null) {
+    if (changes['balance']) {
       this.balance = changes['balance'].currentValue;
     }
   }
 
-
   calculateTransactionCost() {
-    this.transactionCost = 0;
-
-    switch (this.transactionData.transactionType) {
+    const transactionType = this.transactionForm.get('transactionType')?.value;
+    
+    switch (transactionType) {
       case TransactionType.ATM_DEPOSIT:
         this.transactionCost = 2;
         break;
@@ -77,21 +70,23 @@ export class TransactionFormComponent {
       case TransactionType.ATM_WITHDRAWAL:
         this.transactionCost = 1;
         break;
+      default:
+        this.transactionCost = 0;
     }
   }
 
-
   submitForm() {
-    this.showConfirmationDialog = true;
+    if (this.transactionForm.valid) {
+      this.showConfirmationDialog = true;
+    }
   }
 
   confirmTransaction(confirmed: boolean) {
     this.showConfirmationDialog = false;
     if (confirmed) {
-      if ((this.transactionData.transactionType === TransactionType.ATM_DEPOSIT)
-        || (this.transactionData.transactionType === TransactionType.BRANCH_DEPOSIT)
-        || (this.transactionData.transactionType === TransactionType.OTHER_ACCOUNT_DEPOSIT)
-      ) {
+      const transactionType = this.transactionForm.get('transactionType')?.value;
+      
+      if ([TransactionType.ATM_DEPOSIT, TransactionType.BRANCH_DEPOSIT, TransactionType.OTHER_ACCOUNT_DEPOSIT].includes(transactionType)) {
         this.makeDeposit();
       } else {
         this.makeWithdrawal();
@@ -105,55 +100,63 @@ export class TransactionFormComponent {
       return;
     }
 
-    const balanceWithAmount = this.balance + this.transactionData.amount;
+    const amount = this.transactionForm.get('amount')?.value;
+    const balanceWithAmount = this.balance + amount;
 
     if (this.transactionCost > balanceWithAmount) {
-
-      this.errorMessage = 'La transacción más el costo debe ser mayor al balance'
-      return
+      this.errorMessage = 'La transacción más el costo debe ser mayor al balance';
+      return;
     }
 
-    this.transactionService.createDeposit(this.transactionData).subscribe({
-      next: () => {
-        this.transactionService.notifyTransactionCreated(this.transactionData.accountNumber);
-        this.close.emit();
+    const transactionData: TransactionRequest = {
+      accountNumber: this.transactionForm.get('accountNumber')?.value,
+      amount: amount,
+      transactionType: this.transactionForm.get('transactionType')?.value
+    };
 
+    this.transactionService.createDeposit(transactionData).subscribe({
+      next: () => {
+        this.transactionService.notifyTransactionCreated(transactionData.accountNumber);
+        this.close.emit();
       },
       error: (error: any) => {
-        if (error && error.error && error.error.message) {
-          this.errorMessage = error.error.message;
-        } else {
-          this.errorMessage = 'Ocurrió un error inesperado';
-        }
+        this.errorMessage = error.error?.message || 'Ocurrió un error inesperado';
       }
     });
   }
 
   makeWithdrawal() {
-    const amountWithCost = this.transactionData.amount + this.transactionCost;
+    const amount = this.transactionForm.get('amount')?.value;
+    const amountWithCost = amount + this.transactionCost;
+
     if (this.balance === null || this.balance === undefined) {
       this.errorMessage = 'No se pudo obtener el balance de la cuenta';
       return;
     }
 
     if (amountWithCost > this.balance) {
-      this.errorMessage = 'La transacción más el costo debe ser mayor al balance'
-      return
+      this.errorMessage = 'La transacción más el costo debe ser mayor al balance';
+      return;
     }
 
+    const transactionData: TransactionRequest = {
+      accountNumber: this.transactionForm.get('accountNumber')?.value,
+      amount: amount,
+      transactionType: this.transactionForm.get('transactionType')?.value
+    };
 
-    this.transactionService.createWithdrawal(this.transactionData).subscribe({
+    this.transactionService.createWithdrawal(transactionData).subscribe({
       next: () => {
-        this.transactionService.notifyTransactionCreated(this.transactionData.accountNumber);
+        this.transactionService.notifyTransactionCreated(transactionData.accountNumber);
         this.close.emit();
       },
       error: (error: any) => {
-        if (error && error.error && error.error.message) {
-          this.errorMessage = error.error.message;
-        } else {
-          this.errorMessage = 'Ocurrió un error inesperado';
-        }
+        this.errorMessage = error.error?.message || 'Ocurrió un error inesperado';
       }
     });
+  }
+
+  get isFormInvalid(): boolean {
+    return this.transactionForm.invalid;
   }
 }

@@ -1,26 +1,30 @@
 <aside class="sidebar" [class.sidebar--collapsed]="isSidebarCollapsed">
     <div class="sidebar__user-profile">
         <div class="sidebar__avatar" >
-            <img src="assets/images/user-1.jpg" alt="">
+            <img src="assets/images/user-1.jpg" alt="User Avatar">
         </div>
         @if(username){
             <h2>{{username}}</h2>
         }
     </div>
     <nav>
-        <button class="sidebar__toggle-btn" (click)="handleToggleSidebar()">☰
+        <button class="sidebar__toggle-btn" (click)="handleToggleSidebar()"
+        aria-label="Sidebar Toggle"
+        >☰
             <span>Hidden</span>
         </button>
         
         <a (click)="accounts()" routerLinkActive="active">
             <i class="sidebar__icon">
-                    <img src="assets/images/account_balance.svg" alt="">
+                    <img src="assets/images/account_balance.svg" alt="bank account icon" aria-hidden="true">
             </i>
             <span>Accounts</span>
         </a>
-        <a (click)="transactions()" routerLinkActive="active">
+        <a (click)="transactions()" routerLinkActive="active"
+        aria-label="Go to account list"
+        >
             <i class="sidebar__icon">
-                    <img src="assets/images/transaction.svg" alt="">
+                    <img src="assets/images/transaction.svg" alt="transaction icon" aria-hidden="true">
             </i>
             <span>Transactions</span>
         </a>

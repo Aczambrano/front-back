@@ -1,13 +1,13 @@
-<div class="auth-container">
+<main class="auth-container">
   <div class="auth-form">
-    <h2 class="auth-form__title">Iniciar Sesión</h2>
+    <h1 class="auth-form__title">Iniciar Sesión</h1>
 
     <form [formGroup]="loginForm" (ngSubmit)="login()" class="auth-form__form">
       <div class="auth-form__group">
         <label for="username" class="auth-form__label">Nombre de Usuario</label>
-        <input type="text" id="username" formControlName="username" class="auth-form__input"  >
+        <input type="text" id="username" formControlName="username" class="auth-form__input" aria-describedby="username-error" >
         @if (usernameControl?.invalid && (usernameControl?.dirty || usernameControl?.touched)) {
-            <div class="auth-form__error">
+            <div class="auth-form__error" id="username-error">
                 @if (usernameControl?.errors?.['required']) {
                    <div>El nombre de usuario es requerido.</div>
                 }
@@ -20,25 +20,24 @@
 
       <div class="auth-form__group">
         <label for="password" class="auth-form__label">Contraseña</label>
-        <input type="password" id="password" formControlName="password" class="auth-form__input" >
+        <input type="password" id="password" formControlName="password" class="auth-form__input" aria-describedby="password-error" >
         @if (passwordControl?.invalid && (passwordControl?.dirty || passwordControl?.touched)) {
-            <div class="auth-form__error">
+            <div class="auth-form__error" id="password-error">
                 @if (passwordControl?.errors?.['required']) {
                      <div>La contraseña es requerida.</div>
                 }
             </div>
         }
       </div>
-
       <button type="submit" class="auth-form__button" [disabled]="loginForm.invalid">Iniciar Sesión</button>
     </form>
     <p class="auth-form__link">
-      ¿No tienes una cuenta? <span class="auth-form__link-button" (click)="register()" role="button">Regístrate</span>
+      ¿No tienes una cuenta? <a class="auth-form__link-button" (click)="register()">Regístrate</a>
     </p>
       @if (errorMessage) {
-          <div class="auth-form__message auth-form__message--error">
+          <div class="auth-form__message auth-form__message--error" aria-live="polite">
            {{ errorMessage }}
         </div>
       }
   </div>
-</div>
+</main>

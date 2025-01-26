@@ -1,10 +1,9 @@
-<div class="transaction-list-container">
-    <h2>Lista de Transacciones</h2>
-    <div class="transaction-list-filters">
-        <label for="accountNumber">Número de Cuenta:</label>
+<div class="container" aria-label="Transactions List">
+    <h2>Transactions List</h2>
+    <div class="container__filters">
+        <label for="accountNumber">Account number:</label>
         <input type="text" id="accountNumber" [(ngModel)]="selectedAccountNumber" />
-          <button class="transaction-list-button" (click)="searchByAccountNumber()">Buscar</button>
+          <button class="container__filters--button" (click)="searchByAccountNumber()">Search</button>
     </div>
-
    <app-table [headers]="['transactionType', 'amount','transactionCost', 'date']" [data]="transactions" noDataMessage="No hay transacciones para mostrar"></app-table>
 </div>

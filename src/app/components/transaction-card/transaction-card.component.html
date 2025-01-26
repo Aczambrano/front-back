@@ -1,19 +1,18 @@
-<!-- transaction-card.component.html -->
-<div class="invoice-card">
-    <div class="invoice-header">
-      <div class="invoice-number">#{{ transactionNumber }}</div>
+<div class="invoice">
+    <div class="invoice__header">
+      <div class="invoice__number">#{{ transactionNumber }}</div>
     </div>
-    <div class="invoice-details">
-      <div class="invoice-section">
-        <div class="invoice-title">Transaction Date:</div>
-        <div class="invoice-value">{{ transaction.date | date: "medium" }}</div>
-        <div class="invoice-title">Account:</div>
-        <div class="invoice-value">{{ accountNumber }}</div>
-        <div class="invoice-title">Type:</div>
-        <div class="invoice-value">{{ transaction.transactionType }}</div>
+    <div class="invoice__details">
+      <div class="invoice__section">
+        <div class="invoice__section--title">Transaction Date:</div>
+        <div class="invoice__section--value">{{ transaction.date | date: "medium" }}</div>
+        <div class="invoice__section--title">Account:</div>
+        <div class="invoice__section--value">{{ accountNumber }}</div>
+        <div class="invoice__section--title">Type:</div>
+        <div class="invoice__section--value">{{ transaction.transactionType }}</div>
       </div>
     </div>
-    <table class="invoice-table">
+    <table class="invoice__table" aria-label="Transaction Details">
       <thead>
         <tr>
           <th>Amount</th>
@@ -37,27 +36,27 @@
         </tr>
       </tbody>
     </table>
-    <div class="invoice-total">
+    <div class="invoice__total">
       @if (
         transaction.transactionType == TransactionType.BRANCH_DEPOSIT ||
         transaction.transactionType == TransactionType.ATM_DEPOSIT ||
         transaction.transactionType == TransactionType.OTHER_ACCOUNT_DEPOSIT
       ) {
-      <div class="subtotal">
+      <div class="invoice__total--subtotal">
         <span>Sub total:</span>
         <span>{{ transaction.amount - transaction.transactionCost }}</span>
       </div>
-      <div class="grand-total">
-        <span>Grand Total:</span>
+      <div class="invoice__total--total">
+        <span>Total:</span>
         <span>{{ transaction.amount - transaction.transactionCost }}</span>
       </div>
       } @else {
-      <div class="subtotal">
+      <div class="invoice__total--subtotal">
         <span>Sub total:</span>
         <span>{{ transaction.amount + transaction.transactionCost }}</span>
       </div>
-      <div class="grand-total">
-        <span>Grand Total:</span>
+      <div class="invoice__total--total">
+        <span>Total:</span>
         <span>{{ transaction.amount + transaction.transactionCost }}</span>
       </div>
       }

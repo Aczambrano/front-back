@@ -2,50 +2,16 @@
 <app-loader></app-loader>
 }
 
-<div class="account-list-container">
-    <h2>Lista de Cuentas Bancarias</h2>
-    <div class="account-list-actions">
-        <button class="account-list-button" (click)="openCreateModal()">Crear Cuenta</button>
+<div class="container" aria-label="Bank Account List">
+    <h2>Bank Account List
+    </h2>
+    <div class="container__actions">
+        <button class="container__actions--button" (click)="openCreateModal()">Create Account</button>
     </div>
     <app-table [headers]="['accountNumber', 'owner', 'balance']" [data]="accounts"
-        [actions]="[{label: 'Ver Detalles', handler: showDetails.bind(this)}]">
-
+        [actions]="[{label: 'View Details', handler: showDetails.bind(this)}]">
     </app-table>
     @if(showModal) {
     <app-modal [accountNumber]="selectedAccount" (close)="closeModal()"></app-modal>
     }
 </div>
-
-<!-- <div class="account-list-container">
-    <h2>Lista de Cuentas Bancarias</h2>
-    <div class="account-list-actions">
-        <button class="account-list-button" (click)="openCreateModal()">Crear Cuenta</button>
-    </div>
-
-    <table class="account-list-table">
-        <thead>
-            <tr>
-                <th>Número de Cuenta</th>
-                <th>Propietario</th>
-                <th>Saldo</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            @for (account of accounts; track account.accountNumber) {
-                <tr>
-                    <td>{{ account.accountNumber }}</td>
-                    <td>{{ account.owner }}</td>
-                    <td>{{ account.balance }}</td>
-                    <td>
-                        <button class="account-list-button-details" (click)="showDetails(account.accountNumber)">Ver
-                            Detalles</button>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-   @if(showModal) {
-      <app-account-modal [accountNumber]="selectedAccount" (close)="closeModal()"></app-account-modal>
-   }
-</div> -->

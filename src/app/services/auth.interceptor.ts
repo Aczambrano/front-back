@@ -2,7 +2,7 @@ import {
     HttpInterceptorFn,
     HttpErrorResponse,
     HttpRequest,
-    HttpHandlerFn
+    HttpHandlerFn,
 } from '@angular/common/http';
 import { throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 import { inject } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 
-export const AuthInterceptor: HttpInterceptorFn = (req, next) => {
+export const AuthInterceptor: HttpInterceptorFn = (req: HttpRequest<unknown>, next: HttpHandlerFn) => {
     const authService = inject(AuthService);
     const router = inject(Router);
     const jwtHelper = new JwtHelperService();
@@ -19,9 +19,8 @@ export const AuthInterceptor: HttpInterceptorFn = (req, next) => {
     const token = authService.getToken();
     let request = req;
 
-
     if (token) {
-        const isTokenExpired = jwtHelper.isTokenExpired(token)
+      const isTokenExpired = jwtHelper.isTokenExpired(token);
         if(isTokenExpired){
             authService.removeToken();
             authService.setUsername("");
@@ -29,12 +28,16 @@ export const AuthInterceptor: HttpInterceptorFn = (req, next) => {
             return throwError(() => new Error('Token expirado'));
         }
 
-         request = req.clone({
-           setHeaders: {
-             Authorization: `Bearer ${token}`,
-           },
-         });
+
+        if (!req.headers.has('Authorization')) {
+             request = req.clone({
+               setHeaders: {
+                 Authorization: `Bearer ${token}`,
+               },
+             });
+           }
        }
+
 
     return next(request).pipe(
         catchError((error: HttpErrorResponse) => {

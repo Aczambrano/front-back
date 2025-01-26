@@ -1,68 +1,90 @@
 <div class="transaction-form-container">
-  <h2>Realizar Transacción</h2>
-  <form (ngSubmit)="submitForm()" #transactionForm="ngForm" class="transaction-form">
+  <h2>Perform Transaction</h2>
+  <form [formGroup]="transactionForm" (ngSubmit)="submitForm()" class="transaction-form">
     <div class="transaction-form__group">
-      <label for="accountNumber" class="transaction-form__label">Número de Cuenta</label>
-      <input type="text" id="accountNumber" name="accountNumber" class="transaction-form__input" required
-        [(ngModel)]="transactionData.accountNumber" #accountNumberInput="ngModel" [readonly]="true">
-      @if (accountNumberInput.invalid && (accountNumberInput.dirty || accountNumberInput.touched)) {
-      <div class="transaction-form__error">
-        @if (accountNumberInput.errors?.['required']) {
-        <div>El número de cuenta es requerido.</div>
-        }
-      </div>
-      }
-    </div>
-    <div class="transaction-form__group">
-      <label for="amount" class="transaction-form__label">Monto</label>
-      <input type="number" id="amount" name="amount" class="transaction-form__input" required
-        [(ngModel)]="transactionData.amount" #amountInput="ngModel">
-      @if (amountInput.invalid && (amountInput.dirty || amountInput.touched)) {
-      <div class="transaction-form__error">
-        @if (amountInput.errors?.['required']) {
-        <div>El monto es requerido.</div>
-        }
-      </div>
+      <label for="accountNumber" class="transaction-form__label">Account Number</label>
+      <input 
+        type="text" 
+        id="accountNumber" 
+        formControlName="accountNumber" 
+        class="transaction-form__input" 
+        readonly
+      >
+      @if (transactionForm.get('accountNumber')?.invalid && 
+           (transactionForm.get('accountNumber')?.dirty || transactionForm.get('accountNumber')?.touched)) {
+        <div class="transaction-form__error">
+          <div>The account number is required.</div>
+        </div>
       }
     </div>
 
     <div class="transaction-form__group">
-      <label for="transactionType" class="transaction-form__label">Tipo de Transacción</label>
-      <select id="transactionType" name="transactionType" class="transaction-form__input" required
-        [(ngModel)]="transactionData.transactionType" #transactionTypeInput="ngModel" (change)="calculateTransactionCost()">
-        <option value="" disabled selected>Seleccionar Tipo</option>
+      <label for="amount" class="transaction-form__label">Amount</label>
+      <input 
+        type="number" 
+        id="amount" 
+        formControlName="amount" 
+        class="transaction-form__input"
+      >
+      @if (transactionForm.get('amount')?.invalid && 
+           (transactionForm.get('amount')?.dirty || transactionForm.get('amount')?.touched)) {
+        <div class="transaction-form__error">
+          @if (transactionForm.get('amount')?.errors?.['required']) {
+            <div>The amount is required.</div>
+          }
+          @if (transactionForm.get('amount')?.errors?.['min']) {
+            <div>The amount must be greater than 0.</div>
+          }
+        </div>
+      }
+    </div>
 
+    <div class="transaction-form__group">
+      <label for="transactionType" class="transaction-form__label">Transaction Type</label>
+      <select 
+        id="transactionType" 
+        formControlName="transactionType" 
+        class="transaction-form__input"
+        (change)="calculateTransactionCost()"
+      >
+        <option value="" disabled selected>Select Type</option>
         @for (option of transactionOptions; track option.value) {
           <option [value]="option.value">{{ option.label }}</option>
-       }
-
-      </select>
-      @if(transactionTypeInput.invalid && (transactionTypeInput.dirty || transactionTypeInput.touched)) {
-      <div class="transaction-form__error">
-        @if (transactionTypeInput.errors?.['required']) {
-        <div>El tipo de transacción es requerido.</div>
         }
-      </div>
+      </select>
+      @if (transactionForm.get('transactionType')?.invalid && 
+           (transactionForm.get('transactionType')?.dirty || transactionForm.get('transactionType')?.touched)) {
+        <div class="transaction-form__error">
+          <div>The transaction type is required.</div>
+        </div>
       }
     </div>
+
     @if (errorMessage) {
-    <div class="auth-form__message auth-form__message--error">
-      {{ errorMessage }}
-    </div>
+      <div class="auth-form__message auth-form__message--error">
+        {{ errorMessage }}
+      </div>
     }
-    <button type="submit" class="transaction-form__button" [disabled]="transactionForm.invalid">Realizar
-      Transacción</button>
+
+    <button 
+      type="submit" 
+      class="transaction-form__button" 
+      [disabled]="isFormInvalid"
+    >
+      Perform Transaction
+    </button>
   </form>
+
   @if (showConfirmationDialog) {
     <div class="modal-overlay">
-        <div class="modal">
-             <p class="modal-title">¿Está seguro de realizar esta transacción?</p>
-             <p class="modal-text">Esta acción no se puede deshacer.</p>
-             <div class="modal-actions">
-                 <button (click)="confirmTransaction(false)" class="cancel-button">Cancelar</button>
-                 <button (click)="confirmTransaction(true)" class="confirm-button">Realizar Transacción</button>
-            </div>
+      <div class="modal">
+        <p class="modal-title">Are you sure about making this transaction?</p>
+        <p class="modal-text">This action cannot be undone.</p>
+        <div class="modal-actions">
+          <button (click)="confirmTransaction(false)" class="cancel-button">Cancel</button>
+          <button (click)="confirmTransaction(true)" class="confirm-button">Perform Transaction</button>
         </div>
+      </div>
     </div>
   }
 </div>

@@ -1,6 +1,6 @@
 <div class="modal">
-    <div class="modal-content">
-        <span class="close" (click)="closeModal()">×</span>
+    <div class="modal__content">
+        <span class="modal__close" (click)="closeModal()">×</span>
         @if(balance !== null){
             <app-transaction-form [balance]="balance" [accountNumber]="accountNumber" (close)="closeModal()"></app-transaction-form>
 

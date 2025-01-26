@@ -12,11 +12,10 @@
     &__name {
         display: flex;
         align-items: center;
-
-        h2 {
-            font-size: 1.125rem;
-            font-weight: 600;
-        }
+    }
+    &__title {
+        font-size: 1.125rem;
+        font-weight: 600;
     }
 
     &__header {
@@ -41,8 +40,7 @@
     &__actions {
         display: flex;
         gap: 0.5rem;
-
-        button {
+       &-button{
             padding: 0.5rem 1rem;
             border-radius: 4px;
             cursor: pointer;
@@ -55,30 +53,29 @@
             &:hover {
                 background-color: #0056b3;
             }
-        }
 
-        .edit-button {
-            background-color: #28a745;
-
-            &:hover {
-                background-color: #1e7e34;
+            &--edit {
+              background-color: #28a745;
+    
+                &:hover {
+                    background-color: #1e7e34;
+                }
+            }
+            &--transaction {
+              background-color: #007bff;
+    
+                &:hover {
+                    background-color: #2376cf;
+                }
             }
         }
 
-        .transaction-button {
-            background-color: #007bff;
 
-            &:hover {
-                background-color: #2376cf;
-            }
-        }
     }
 
     &__details {
         padding: 1.5rem;
-
-
-    }
+      }
 
     &__detail {
         display: flex;

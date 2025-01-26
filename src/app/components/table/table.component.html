@@ -1,13 +1,13 @@
-<div class="custom-table-container" [class]="customClass">
+<div class="container" [class]="customClass" aria-label="Data table">
     @if(data && data.length > 0){
-    <table class="custom-table">
+    <table class="container__table">
         <thead>
             <tr>
                 @for (header of headers; track header) {
-                    <th>{{ header }}</th>
+                    <th scope="col">{{ header }}</th>
                 }
                  @if (actions && actions.length > 0) {
-                  <th>Acciones</th>
+                  <th scope="col">Actions</th>
                 }
             </tr>
         </thead>

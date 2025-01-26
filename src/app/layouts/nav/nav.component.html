@@ -1,18 +1,19 @@
 <nav class="navbar">
     <h1 class="navbar__title">Bank Account</h1>
     <div class="navbar__actions">
-        <div class="navbar__user-menu">
-            <img src="assets/images/user-1.jpg" alt="User" class="navbar__avatar" (click)="toggleMenu($event)">
+        <div class="navbar__user-menu" role="menu">
+            <img src="assets/images/user-1.jpg" alt="User" class="navbar__avatar" (click)="toggleMenu($event)"
+                role="button" aria-label="Open user menu">
             @if (showMenu) {
             <div class="navbar__dropdown">
-                <a class="navbar__dropdown-item">
+                <a class="navbar__dropdown--item" aria-label="My profile" role="menuitem">
                     <i class="navbar__icon">
-                        <img src="assets/images/profile.svg" alt="">
+                        <img src="assets/images/profile.svg" alt="profile" aria-hidden="true">
                     </i>
                     My Profile
                 </a>
 
-                <button class="navbar__logout-btn" (click)="logout()">
+                <button class="navbar__logout-btn" (click)="logout()" aria-label="Sign Out" role="menuitem">
                     Logout
                 </button>
             </div>
