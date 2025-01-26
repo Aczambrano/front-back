@@ -22,7 +22,8 @@ export class AccountListComponent implements OnInit {
 
 
   private accountUpdatedSubscription?: Subscription;
-  constructor(private accountService: AccountService, private router: Router) {
+  constructor(private accountService: AccountService, private router: Router,
+  ) {
 
     this.accountUpdatedSubscription = this.accountService.accountUpdated$.pipe(
       switchMap(() => {
@@ -60,7 +61,7 @@ export class AccountListComponent implements OnInit {
 
   showDetails(account: AccountResponse) {
     this.selectedAccount = account.accountNumber;
-    this.router.navigate(['/dashboard/account-detail'], { queryParams: { accountNumber: account.accountNumber } });
+    this.router.navigate(['/dashboard/account-detail', account.accountNumber]); 
   }
 
   openCreateModal() {

@@ -83,8 +83,9 @@ export class AccountDetailComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe(params => {
+    this.route.params.subscribe(params => {
       this.accountNumber = params['accountNumber'];
+
       if (this.accountNumber) {
         this.loadAccountDetails();
         this.loadTransactions();
