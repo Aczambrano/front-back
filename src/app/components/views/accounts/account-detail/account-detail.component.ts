@@ -37,12 +37,12 @@ export class AccountDetailComponent implements OnInit, OnDestroy {
 
 
   transactionOptions = [
-    { label: TransactionType.BRANCH_DEPOSIT, value:'(0$)' },
-    { label: TransactionType.ATM_DEPOSIT, value: ' (2$)' },
-    { label: TransactionType.OTHER_ACCOUNT_DEPOSIT, value: ' (1.5$)' },
-    { label: TransactionType.PHYSICAL_PURCHASE, value: ' (0$)' },
-    { label: TransactionType.ONLINE_PURCHASE, value: ' (5$)' },
-    { label: TransactionType.ATM_WITHDRAWAL, value: ' (1$)' },
+    { label: TransactionType.BRANCH_DEPOSIT, value:'$0' },
+    { label: TransactionType.ATM_DEPOSIT, value: ' $2' },
+    { label: TransactionType.OTHER_ACCOUNT_DEPOSIT, value: ' $1.5' },
+    { label: TransactionType.PHYSICAL_PURCHASE, value: ' $0' },
+    { label: TransactionType.ONLINE_PURCHASE, value: ' $5' },
+    { label: TransactionType.ATM_WITHDRAWAL, value: ' $1' },
   ];
 
 
@@ -171,4 +171,5 @@ export class AccountDetailComponent implements OnInit, OnDestroy {
     this.loadAccountDetails();
     this.loadTransactions();
   }
+
 }

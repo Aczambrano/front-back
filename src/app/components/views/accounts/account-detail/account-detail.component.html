@@ -7,7 +7,7 @@
         [description]="'Acc. number: ' + account.accountNumber" imageType="image" image="assets/images/user-1.jpg"
         tabindex="0" aria-label="Owner Summary Card"></app-sumary-card>
 
-    <app-sumary-card class="summary__card" title="Current Balance" [value]="account.balance"
+    <app-sumary-card class="summary__card" title="Current Balance" [value]="'$'+account.balance"
         [description]="account.status" imageType="icon" icon="assets/images/cash.svg" tabindex="0"
         aria-label="Current Balance Summary Card"></app-sumary-card>
 
